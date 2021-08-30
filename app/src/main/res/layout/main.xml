@@ -11,17 +11,28 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
+        <TextView
+            android:id="@+id/tv_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_chart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_above="@id/layout_dots" />
 
         <LinearLayout
             android:id="@+id/layout_dots"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="6dp"
             android:gravity="center"
             android:orientation="horizontal" />
     </RelativeLayout>
@@ -63,7 +74,7 @@
                         android:layout_below="@id/img_living_room"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="Living Room"
+                        android:text="@string/living_room"
                         android:textColor="@color/black"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -157,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/img_kitchen"
                         android:gravity="center"
-                        android:text="Kitchen"
+                        android:text="@string/kitchen"
                         android:textColor="@color/black"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -250,7 +261,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/img_bedroom"
                         android:gravity="center"
-                        android:text="Bedroom"
+                        android:text="@string/bedroom"
                         android:textColor="@color/black"
                         android:textSize="17sp"
                         android:textStyle="bold" />

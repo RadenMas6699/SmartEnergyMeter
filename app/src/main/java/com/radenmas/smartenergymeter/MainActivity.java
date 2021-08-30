@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
+    private TextView tvRoom;
     private LinearLayout dotsLayout;
     private int[] layouts;
 
@@ -27,9 +28,11 @@ public class MainActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         setContentView(R.layout.main);
 
-
+        tvRoom = findViewById(R.id.tv_room);
         viewPager = findViewById(R.id.vp_chart);
         dotsLayout = findViewById(R.id.layout_dots);
+
+        tvRoom.setText(R.string.living_room);
 
         // layout xml slide 1 sampai 3
         layouts = new int[]{
@@ -76,14 +79,20 @@ public class MainActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             addBottomDots(position);
 
-            // mengubah button lanjut 'NEXT' / 'GOT IT'
-            if (position == layouts.length - 1) {
-                // last page. make button text to GOT IT
-//                btnStart.setVisibility(View.VISIBLE);
-            } else {
-                // still pages are left
-//                btnStart.setVisibility(View.GONE);
+            int nameRoom;
+
+            switch (position) {
+                case 1:
+                    nameRoom = R.string.kitchen;
+                    break;
+                case 2:
+                    nameRoom = R.string.bedroom;
+                    break;
+                default:
+                    nameRoom = R.string.living_room;
+                    break;
             }
+            tvRoom.setText(nameRoom);
         }
 
         @Override

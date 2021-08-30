@@ -8,10 +8,9 @@
         android:id="@+id/imgSplash"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:layout_marginBottom="16dp"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@drawable/ic_wireless_energy_color" />
 
     <TextView
         android:id="@+id/tvApp"
