@@ -21,11 +21,25 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
+        <ImageButton
+            android:id="@+id/imgInfo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="4dp"
+            android:src="@drawable/ic_info"
+            app:tint="@color/white" />
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/layout_dots" />
+            android:layout_above="@id/layout_dots"
+            android:layout_below="@id/imgInfo" />
 
         <LinearLayout
             android:id="@+id/layout_dots"
@@ -121,7 +135,7 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/imgStateLight"
+                        android:id="@+id/imgStateLivingRoom"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_alignParentEnd="true"
@@ -131,7 +145,7 @@
                         android:visibility="visible" />
 
                     <ImageView
-                        android:id="@+id/imgSwitchLamp"
+                        android:id="@+id/imgSwitchLivingRoom"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:layout_alignParentEnd="true"
@@ -139,6 +153,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         android:foreground="?attr/selectableItemBackground"
+                        android:onClick="SwitchLivingRoom"
                         android:padding="8dp"
                         android:src="@drawable/ic_power_on" />
                 </RelativeLayout>
@@ -215,6 +230,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/imgStateKitchen"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_alignParentEnd="true"
@@ -224,6 +240,7 @@
                         android:visibility="invisible" />
 
                     <ImageView
+                        android:id="@+id/imgSwitchKitchen"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:layout_alignParentEnd="true"
@@ -231,6 +248,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         android:foreground="?attr/selectableItemBackground"
+                        android:onClick="SwitchKitchen"
                         android:padding="8dp"
                         android:src="@drawable/ic_power_off" />
                 </RelativeLayout>
@@ -308,6 +326,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/imgStateBedroom"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_alignParentEnd="true"
@@ -317,6 +336,7 @@
                         android:visibility="visible" />
 
                     <ImageView
+                        android:id="@+id/imgSwitchBedroom"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:layout_alignParentEnd="true"
@@ -324,6 +344,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         android:foreground="?attr/selectableItemBackground"
+                        android:onClick="SwitchBedroom"
                         android:padding="8dp"
                         android:src="@drawable/ic_power_on" />
                 </RelativeLayout>

@@ -28,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         setContentView(R.layout.main);
 
-        tvRoom = findViewById(R.id.tv_room);
-        viewPager = findViewById(R.id.vp_chart);
-        dotsLayout = findViewById(R.id.layout_dots);
+        initView();
 
         tvRoom.setText(R.string.living_room);
 
@@ -47,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
+    }
+
+    private void initView() {
+        tvRoom = findViewById(R.id.tv_room);
+        viewPager = findViewById(R.id.vp_chart);
+        dotsLayout = findViewById(R.id.layout_dots);
     }
 
     private void addBottomDots(int currentPage) {
@@ -105,6 +109,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    public void SwitchLivingRoom(View view) {
+
+    }
+
+    public void SwitchKitchen(View view) {
+
+    }
+
+    public void SwitchBedroom(View view) {
+
+    }
 
     public class MyViewPagerAdapter extends PagerAdapter {
 
