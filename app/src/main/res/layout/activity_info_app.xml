@@ -101,9 +101,10 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="120dp"
-            android:scaleType="fitCenter"
+            app:civ_circle_background_color="@color/bg_white_blue"
+            android:scaleType="centerCrop"
             android:layout_height="120dp"
             android:src="@drawable/img_musda" />
     </LinearLayout>

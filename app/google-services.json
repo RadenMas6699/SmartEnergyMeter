@@ -1,18 +1,27 @@
 {
   "project_info": {
     "project_number": "394931070724",
+    "firebase_url": "https://smartenergymeter-a537c-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "smartenergymeter-a537c",
     "storage_bucket": "smartenergymeter-a537c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:394931070724:android:5875930d219be403e25251",
+        "mobilesdk_app_id": "1:394931070724:android:b9dbd8f63cfd2bd7e25251",
         "android_client_info": {
           "package_name": "com.radenmas.smartenergymeter"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "394931070724-bfbr505vupd3ge1ecs49huu4v827g90a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.radenmas.smartenergymeter",
+            "certificate_hash": "d16a9e947e12ce07f0faf576488044772f6c3b7a"
+          }
+        },
         {
           "client_id": "394931070724-s1r11ic11opus6j7bn6m1eepj2ulkfb5.apps.googleusercontent.com",
           "client_type": 3
