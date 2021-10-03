@@ -1,22 +1,14 @@
-package com.radenmas.smartenergymeter;
+package com.radenmas.smartenergymeter.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -28,18 +20,20 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.radenmas.smartenergymeter.DataChart;
+import com.radenmas.smartenergymeter.InfoAppActivity;
+import com.radenmas.smartenergymeter.MyMarkerView;
+import com.radenmas.smartenergymeter.R;
+import com.radenmas.smartenergymeter.base.BaseActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity {
-//    private ViewPager viewPager;
+public class MainActivity extends BaseActivity {
+    //    private ViewPager viewPager;
     private TextView tvRoom, voltLivingRoom, ampereLivingRoom, wattLivingRoom,
             voltKitchen, ampereKitchen, wattKitchen,
             voltBedroom, ampereBedroom, wattBedroom,
@@ -51,64 +45,44 @@ public class MainActivity extends AppCompatActivity {
     private LineChart chart;
     int a = 0, b = 0, c = 0;
 
-
-    LineDataSet lineDataSet = new LineDataSet(null,null);
-    ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
-    LineData lineData;
+    private LineDataSet lineDataSet = new LineDataSet(null, null);
+    private ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
+    private LineData lineData;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        setContentView(R.layout.main);
+    protected int getLayoutResource() {
+        return R.layout.main;
+    }
 
+    @Override
+    protected void myCodeHere() {
         initView();
         onClick();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("pesan");
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                Toast.makeText(MainActivity.this, ""+value, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
-
         if (a == 1) {
             a = 0;
-
             switchLivingRoom.setImageResource(R.drawable.ic_power_on);
             stateLivingRoom.setVisibility(View.VISIBLE);
             statusLivingRoom.setText(R.string.status_on);
         } else {
             a = 1;
-
             switchLivingRoom.setImageResource(R.drawable.ic_power_off);
             stateLivingRoom.setVisibility(View.INVISIBLE);
             statusLivingRoom.setText(R.string.status_off);
         }
         if (b == 1) {
             b = 0;
-
             switchKitchen.setImageResource(R.drawable.ic_power_on);
             stateKitchen.setVisibility(View.VISIBLE);
             statusKitchen.setText(R.string.status_on);
         } else {
             b = 1;
-
             switchKitchen.setImageResource(R.drawable.ic_power_off);
             stateKitchen.setVisibility(View.INVISIBLE);
             statusKitchen.setText(R.string.status_off);
         }
         if (c == 1) {
             c = 0;
-
             switchBedroom.setImageResource(R.drawable.ic_power_on);
             stateBedroom.setVisibility(View.VISIBLE);
             statusBedroom.setText(R.string.status_on);
@@ -136,17 +110,19 @@ public class MainActivity extends AppCompatActivity {
 //        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
 
-        GraphSuhu(100);
+        GraphSuhu(5000);
 
         chart.getDescription().setEnabled(false);
         chart.setNoDataTextColor(getResources().getColor(R.color.white));
         chart.invalidate();
     }
 
+
     private void onClick() {
         imgInfo.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
         });
+
         switchLivingRoom.setOnClickListener(v -> {
             if (a == 1) {
                 a = 0;
@@ -242,19 +218,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GraphSuhu(final int limit) {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("SmartEnergyMeter");
-//        Query query = databaseReference.orderByKey().limitToLast(limit);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        dbReff.child("SmartEnergyMeter").limitToLast(limit).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Entry> data = new ArrayList<>();
                 if (dataSnapshot.hasChildren()) {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         DataChart dataChart = child.getValue(DataChart.class);
-                        data.add(new Entry(dataChart.getTime(), dataChart.getLampu1()));
-
-                        Toast.makeText(MainActivity.this, ""+dataChart.lampu1, Toast.LENGTH_SHORT).show();
+                        data.add(new Entry(dataChart.getTime(), dataChart.getTegangan()));
                     }
                     showChart(data);
                     lineDataSet.setDrawCircles(false);
@@ -274,8 +245,8 @@ public class MainActivity extends AppCompatActivity {
         lineDataSet.setLabel("DataSet 1");
         lineDataSet.setDrawFilled(true);
 
-        lineDataSet.setLineWidth(1.5f);
-        lineDataSet.setMode(LineDataSet.Mode.STEPPED);
+        lineDataSet.setLineWidth(2f);
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 //        lineDataSet.setCubicIntensity(0.05f);
         lineDataSet.setDrawValues(false);
         iLineDataSets.clear();
@@ -304,12 +275,12 @@ public class MainActivity extends AppCompatActivity {
         YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.LEFT);
         yAxisL.setDrawGridLines(false);
         yAxisL.setDrawLabels(false);
-        yAxisL.setAxisMinimum(15);
-        yAxisL.setAxisMaximum(45);
+        yAxisL.setAxisMinimum(0);
+        yAxisL.setAxisMaximum(100);
 
-//        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-//        mv.setChartView(chart);
-//        chart.setMarker(mv);
+        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+        mv.setChartView(chart);
+        chart.setMarker(mv);
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
@@ -319,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
         chart.clear();
         chart.setData(lineData);
         chart.invalidate();
-        chart.moveViewTo(lineData.getEntryCount(),50L, YAxis.AxisDependency.LEFT);
+        chart.moveViewTo(lineData.getEntryCount(), 50L, YAxis.AxisDependency.LEFT);
     }
 
     private void addBottomDots(int currentPage) {

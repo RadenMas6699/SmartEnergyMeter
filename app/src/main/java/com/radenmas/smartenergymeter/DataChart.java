@@ -1,17 +1,26 @@
 package com.radenmas.smartenergymeter;
 
 public class DataChart {
-    float kkb, lampu1, lampu2;
+    float Tegangan, kkb, lampu1, lampu2;
     long time;
 
     public DataChart() {
     }
 
-    public DataChart(float kkb, float lampu1, float lampu2, long time) {
+    public DataChart(float tegangan, float kkb, float lampu1, float lampu2, long time) {
+        Tegangan = tegangan;
         this.kkb = kkb;
         this.lampu1 = lampu1;
         this.lampu2 = lampu2;
         this.time = time;
+    }
+
+    public float getTegangan() {
+        return Tegangan;
+    }
+
+    public void setTegangan(float tegangan) {
+        Tegangan = tegangan;
     }
 
     public float getKkb() {

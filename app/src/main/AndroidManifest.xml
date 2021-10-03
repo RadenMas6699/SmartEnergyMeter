@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartEnergyMeter">
         <activity android:name=".InfoAppActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.MainActivity" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
