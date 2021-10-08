@@ -10,8 +10,13 @@
     <string name="bedroom">Bedroom</string>
     <string name="living_room">Living Room</string>
     <string name="kitchen">Kitchen</string>
+    <string name="volt">Volt</string>
+    <string name="ampere">Ampere</string>
+    <string name="watt">Watt</string>
     <string name="status_on">Statues : ON</string>
     <string name="status_off">Statues : OFF</string>
     <string name="status_dash">Statues : -</string>
     <string name="dash">-</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

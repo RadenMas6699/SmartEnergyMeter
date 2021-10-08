@@ -1,57 +1,52 @@
 package com.radenmas.smartenergymeter;
 
 public class DataChart {
-    float Tegangan, kkb, lampu1, lampu2;
+    float volt, arus1, arus2, arus3, watt1, watt2, watt3;
     long time;
 
     public DataChart() {
     }
 
-    public DataChart(float tegangan, float kkb, float lampu1, float lampu2, long time) {
-        Tegangan = tegangan;
-        this.kkb = kkb;
-        this.lampu1 = lampu1;
-        this.lampu2 = lampu2;
+    public DataChart(float volt, float arus1, float arus2, float arus3, float watt1, float watt2, float watt3, long time) {
+        this.volt = volt;
+        this.arus1 = arus1;
+        this.arus2 = arus2;
+        this.arus3 = arus3;
+        this.watt1 = watt1;
+        this.watt2 = watt2;
+        this.watt3 = watt3;
         this.time = time;
     }
 
-    public float getTegangan() {
-        return Tegangan;
+    public float getVolt() {
+        return volt;
     }
 
-    public void setTegangan(float tegangan) {
-        Tegangan = tegangan;
+    public float getArus1() {
+        return arus1;
     }
 
-    public float getKkb() {
-        return kkb;
+    public float getArus2() {
+        return arus2;
     }
 
-    public void setKkb(float kkb) {
-        this.kkb = kkb;
+    public float getArus3() {
+        return arus3;
     }
 
-    public float getLampu1() {
-        return lampu1;
+    public float getWatt1() {
+        return watt1;
     }
 
-    public void setLampu1(float lampu1) {
-        this.lampu1 = lampu1;
+    public float getWatt2() {
+        return watt2;
     }
 
-    public float getLampu2() {
-        return lampu2;
-    }
-
-    public void setLampu2(float lampu2) {
-        this.lampu2 = lampu2;
+    public float getWatt3() {
+        return watt3;
     }
 
     public long getTime() {
         return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
     }
 }

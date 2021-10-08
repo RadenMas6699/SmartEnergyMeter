@@ -19,21 +19,25 @@
     <color name="dot_dark_screen1">#A9A9A9</color>
     <color name="dot_dark_screen2">#A9A9A9</color>
     <color name="dot_dark_screen3">#A9A9A9</color>
+    <color name="dot_dark_screen4">#A9A9A9</color>
 
     <!-- dots active colors -->
     <color name="dot_light_screen1">@color/bg_white_blue</color>
     <color name="dot_light_screen2">@color/bg_white_blue</color>
     <color name="dot_light_screen3">@color/bg_white_blue</color>
+    <color name="dot_light_screen4">@color/bg_white_blue</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
         <item>@color/dot_light_screen2</item>
         <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
     </array>
 
     <array name="array_dot_inactive">
         <item>@color/dot_dark_screen1</item>
         <item>@color/dot_dark_screen2</item>
         <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
     </array>
 </resources>

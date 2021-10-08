@@ -35,19 +35,43 @@
             android:src="@drawable/ic_info"
             app:tint="@color/white" />
 
-        <!--        <androidx.viewpager.widget.ViewPager-->
-        <!--            android:id="@+id/vp_chart"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_above="@id/layout_dots"-->
-        <!--            android:layout_below="@id/imgInfo" />-->
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/layout_dots"
-            android:layout_below="@id/imgInfo" />
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/content_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/btn_back_round"
+                android:layout_width="42dp"
+                android:layout_height="62dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="4dp"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_back_round"
+                app:tint="@color/semiTransparent" />
+
+            <ImageButton
+                android:id="@+id/btn_next_round"
+                android:layout_width="42dp"
+                android:layout_height="62dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="4dp"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_next_round"
+                app:tint="@color/semiTransparent" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/layout_dots"
@@ -185,6 +209,106 @@
                     android:background="@drawable/bg_gradient_white_blue">
 
                     <ImageView
+                        android:id="@+id/img_bedroom"
+                        android:layout_width="160dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_bedroom" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_bedroom"
+                        android:gravity="center"
+                        android:text="@string/bedroom"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="16dp"
+                        android:layout_toEndOf="@id/img_bedroom"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/voltBedroom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="16dp"
+                            android:text="@string/dash"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_info" />
+
+                        <TextView
+                            android:id="@+id/ampereBedroom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="16dp"
+                            android:text="@string/dash"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_info" />
+
+                        <TextView
+                            android:id="@+id/wattBedroom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="16dp"
+                            android:text="@string/dash"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_info" />
+
+                        <TextView
+                            android:id="@+id/tvStatusBedroom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:drawablePadding="16dp"
+                            android:text="@string/status_dash"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imgStateBedroom"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/on_power"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/imgSwitchBedroom"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_power_off"
+                        tools:ignore="UsingOnClickInXml" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="7dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_gradient_white_blue">
+
+                    <ImageView
                         android:id="@+id/img_kitchen"
                         android:layout_width="160dp"
                         android:layout_height="100dp"
@@ -270,105 +394,6 @@
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="7dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_gradient_white_blue">
-
-                    <ImageView
-                        android:id="@+id/img_bedroom"
-                        android:layout_width="160dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/ic_bedroom" />
-
-                    <TextView
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/img_bedroom"
-                        android:gravity="center"
-                        android:text="@string/bedroom"
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginVertical="16dp"
-                        android:layout_toEndOf="@id/img_bedroom"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/voltBedroom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
-
-                        <TextView
-                            android:id="@+id/ampereBedroom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
-
-                        <TextView
-                            android:id="@+id/wattBedroom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
-
-                        <TextView
-                            android:id="@+id/tvStatusBedroom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:drawablePadding="16dp"
-                            android:text="@string/status_dash"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/imgStateBedroom"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/on_power"
-                        android:visibility="invisible" />
-
-                    <ImageView
-                        android:id="@+id/imgSwitchBedroom"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_power_off"
-                        tools:ignore="UsingOnClickInXml" />
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
     </ScrollView>

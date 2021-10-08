@@ -9,31 +9,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.radenmas.smartenergymeter.DataChart;
 import com.radenmas.smartenergymeter.InfoAppActivity;
-import com.radenmas.smartenergymeter.MyMarkerView;
 import com.radenmas.smartenergymeter.R;
 import com.radenmas.smartenergymeter.base.BaseActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
+import org.jetbrains.annotations.NotNull;
+
+import java.text.DecimalFormat;
 
 public class MainActivity extends BaseActivity {
-    //    private ViewPager viewPager;
     private TextView tvRoom, voltLivingRoom, ampereLivingRoom, wattLivingRoom,
             voltKitchen, ampereKitchen, wattKitchen,
             voltBedroom, ampereBedroom, wattBedroom,
@@ -41,13 +31,9 @@ public class MainActivity extends BaseActivity {
     private LinearLayout dotsLayout;
     private int[] layouts;
     private ImageView switchLivingRoom, switchKitchen, switchBedroom, stateLivingRoom, stateKitchen, stateBedroom;
-    private ImageButton imgInfo;
-    private LineChart chart;
-    int a = 0, b = 0, c = 0;
-
-    private LineDataSet lineDataSet = new LineDataSet(null, null);
-    private ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
-    private LineData lineData;
+    private ImageButton imgInfo, btnBackRound, btnNextRound;
+    int a, b, c;
+    int count = 0;
 
     @Override
     protected int getLayoutResource() {
@@ -58,63 +44,73 @@ public class MainActivity extends BaseActivity {
     protected void myCodeHere() {
         initView();
         onClick();
+        cekStatus();
+        getData();
 
-        if (a == 1) {
-            a = 0;
-            switchLivingRoom.setImageResource(R.drawable.ic_power_on);
-            stateLivingRoom.setVisibility(View.VISIBLE);
-            statusLivingRoom.setText(R.string.status_on);
-        } else {
-            a = 1;
-            switchLivingRoom.setImageResource(R.drawable.ic_power_off);
-            stateLivingRoom.setVisibility(View.INVISIBLE);
-            statusLivingRoom.setText(R.string.status_off);
-        }
-        if (b == 1) {
-            b = 0;
-            switchKitchen.setImageResource(R.drawable.ic_power_on);
-            stateKitchen.setVisibility(View.VISIBLE);
-            statusKitchen.setText(R.string.status_on);
-        } else {
-            b = 1;
-            switchKitchen.setImageResource(R.drawable.ic_power_off);
-            stateKitchen.setVisibility(View.INVISIBLE);
-            statusKitchen.setText(R.string.status_off);
-        }
-        if (c == 1) {
-            c = 0;
-            switchBedroom.setImageResource(R.drawable.ic_power_on);
-            stateBedroom.setVisibility(View.VISIBLE);
-            statusBedroom.setText(R.string.status_on);
-        } else {
-            c = 1;
-            switchBedroom.setImageResource(R.drawable.ic_power_off);
-            stateBedroom.setVisibility(View.INVISIBLE);
-            statusBedroom.setText(R.string.status_off);
-        }
+        tvRoom.setText("Voltase");
 
-
-        tvRoom.setText(R.string.living_room);
-
-        // layout xml slide 1 sampai 3
         layouts = new int[]{
-                R.layout.fragment_chart_living_room,
-                R.layout.fragment_chart_kitchen,
-                R.layout.fragment_chart_bedroom};
+                R.layout.fragment_chart,
+                R.layout.fragment_chart,
+                R.layout.fragment_chart,
+                R.layout.fragment_chart};
 
-        // tombol dots (lingkaran kecil perpindahan slide)
         addBottomDots(0);
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new VoltFragment()).commit();
+    }
 
-//        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter();
-//        viewPager.setAdapter(myViewPagerAdapter);
-//        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+    private void getData() {
 
+    }
 
-        GraphSuhu(5000);
+    private void cekStatus() {
+        dbReff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                String strA = snapshot.child("lampu_1").getValue().toString();
+                String strB = snapshot.child("lampu_2").getValue().toString();
+                String strC = snapshot.child("lampu_3").getValue().toString();
+                a = Integer.parseInt(strA);
+                b = Integer.parseInt(strB);
+                c = Integer.parseInt(strC);
 
-        chart.getDescription().setEnabled(false);
-        chart.setNoDataTextColor(getResources().getColor(R.color.white));
-        chart.invalidate();
+                if (a == 1) {
+                    a = 0;
+                    switchLivingRoom.setImageResource(R.drawable.ic_power_on);
+                    stateLivingRoom.setVisibility(View.VISIBLE);
+                    statusLivingRoom.setText(R.string.status_on);
+                } else {
+                    a = 1;
+                    setOffPower(voltLivingRoom, ampereLivingRoom, wattLivingRoom,
+                            switchLivingRoom, stateLivingRoom, statusLivingRoom);
+                }
+                if (b == 1) {
+                    b = 0;
+                    switchBedroom.setImageResource(R.drawable.ic_power_on);
+                    stateBedroom.setVisibility(View.VISIBLE);
+                    statusBedroom.setText(R.string.status_on);
+                } else {
+                    b = 1;
+                    setOffPower(voltBedroom, ampereBedroom, wattBedroom,
+                            switchBedroom, stateBedroom, statusBedroom);
+                }
+                if (c == 1) {
+                    c = 0;
+                    switchKitchen.setImageResource(R.drawable.ic_power_on);
+                    stateKitchen.setVisibility(View.VISIBLE);
+                    statusKitchen.setText(R.string.status_on);
+                } else {
+                    c = 1;
+                    setOffPower(voltKitchen, ampereKitchen, wattKitchen,
+                            switchKitchen, stateKitchen, statusKitchen);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 
 
@@ -123,9 +119,34 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
         });
 
+        btnBackRound.setOnClickListener(view1 -> {
+            if (count <= 0) {
+                btnBackRound.setClickable(false);
+                btnNextRound.setClickable(true);
+            } else {
+                btnBackRound.setClickable(true);
+                count = count - 1;
+                changeChart(count);
+                addBottomDots(count);
+            }
+        });
+
+        btnNextRound.setOnClickListener(view1 -> {
+            if (count >= 3) {
+                btnBackRound.setClickable(true);
+                btnNextRound.setClickable(false);
+            } else {
+                btnNextRound.setClickable(true);
+                count = count + 1;
+                changeChart(count);
+                addBottomDots(count);
+            }
+        });
+
         switchLivingRoom.setOnClickListener(v -> {
             if (a == 1) {
                 a = 0;
+                dbReff.child("lampu_1").setValue(1);
                 voltLivingRoom.setText("220 V");
                 ampereLivingRoom.setText("2.5 A");
                 wattLivingRoom.setText("354 W");
@@ -134,38 +155,16 @@ public class MainActivity extends BaseActivity {
                 statusLivingRoom.setText(R.string.status_on);
             } else {
                 a = 1;
-                voltLivingRoom.setText(R.string.dash);
-                ampereLivingRoom.setText(R.string.dash);
-                wattLivingRoom.setText(R.string.dash);
-                switchLivingRoom.setImageResource(R.drawable.ic_power_off);
-                stateLivingRoom.setVisibility(View.INVISIBLE);
-                statusLivingRoom.setText(R.string.status_off);
-            }
-        });
-
-        switchKitchen.setOnClickListener(v -> {
-            if (b == 1) {
-                b = 0;
-                voltKitchen.setText("220 V");
-                ampereKitchen.setText("1 A");
-                wattKitchen.setText("30 W");
-                switchKitchen.setImageResource(R.drawable.ic_power_on);
-                stateKitchen.setVisibility(View.VISIBLE);
-                statusKitchen.setText(R.string.status_on);
-            } else {
-                b = 1;
-                voltKitchen.setText(R.string.dash);
-                ampereKitchen.setText(R.string.dash);
-                wattKitchen.setText(R.string.dash);
-                switchKitchen.setImageResource(R.drawable.ic_power_off);
-                stateKitchen.setVisibility(View.INVISIBLE);
-                statusKitchen.setText(R.string.status_off);
+                dbReff.child("lampu_1").setValue(0);
+                setOffPower(voltLivingRoom, ampereLivingRoom, wattLivingRoom,
+                        switchLivingRoom, stateLivingRoom, statusLivingRoom);
             }
         });
 
         switchBedroom.setOnClickListener(v -> {
-            if (c == 1) {
-                c = 0;
+            if (b == 1) {
+                b = 0;
+                dbReff.child("lampu_2").setValue(1);
                 voltBedroom.setText("220 V");
                 ampereBedroom.setText("4 A");
                 wattBedroom.setText("350 W");
@@ -173,21 +172,94 @@ public class MainActivity extends BaseActivity {
                 stateBedroom.setVisibility(View.VISIBLE);
                 statusBedroom.setText(R.string.status_on);
             } else {
+                b = 1;
+                dbReff.child("lampu_2").setValue(0);
+                setOffPower(voltBedroom, ampereBedroom, wattBedroom,
+                        switchBedroom, stateBedroom, statusBedroom);
+            }
+        });
+
+        switchKitchen.setOnClickListener(v -> {
+            if (c == 1) {
+                c = 0;
+                dbReff.child("lampu_3").setValue(1);
+                voltKitchen.setText("220 V");
+                ampereKitchen.setText("1 A");
+                wattKitchen.setText("30 W");
+                switchKitchen.setImageResource(R.drawable.ic_power_on);
+                stateKitchen.setVisibility(View.VISIBLE);
+                statusKitchen.setText(R.string.status_on);
+            } else {
                 c = 1;
-                voltBedroom.setText(R.string.dash);
-                ampereBedroom.setText(R.string.dash);
-                wattBedroom.setText(R.string.dash);
-                switchBedroom.setImageResource(R.drawable.ic_power_off);
-                stateBedroom.setVisibility(View.INVISIBLE);
-                statusBedroom.setText(R.string.status_off);
+                dbReff.child("lampu_3").setValue(0);
+                setOffPower(voltKitchen, ampereKitchen, wattKitchen,
+                        switchKitchen, stateKitchen, statusKitchen);
             }
         });
     }
 
+    private void setOffPower(TextView volt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
+        volt.setText(R.string.dash);
+        ampere.setText(R.string.dash);
+        watt.setText(R.string.dash);
+        switc.setImageResource(R.drawable.ic_power_off);
+        state.setVisibility(View.INVISIBLE);
+        status.setText(R.string.status_off);
+    }
+
+    private void setOnPower(String path, TextView volt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
+        dbReff.child("SmartEnergyMeter").limitToLast(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    DataChart data = dataSnapshot.getValue(DataChart.class);
+                    DecimalFormat koma = new DecimalFormat("#.##");
+
+                    volt.setText(data.getVolt() + " V");
+                    ampere.setText("" + data.getArus1() + " A");
+                    watt.setText("" + data.getWatt1()+" W");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        volt.setText(R.string.dash);
+        ampere.setText(R.string.dash);
+        watt.setText(R.string.dash);
+        switc.setImageResource(R.drawable.ic_power_on);
+        state.setVisibility(View.VISIBLE);
+        status.setText(R.string.status_on);
+    }
+
+    private void changeChart(int count) {
+        Fragment selectedFragment = null;
+        switch (count) {
+            case 0:
+                selectedFragment = new VoltFragment();
+                tvRoom.setText("Voltase");
+                break;
+            case 1:
+                selectedFragment = new LivingRoomFragment();
+                tvRoom.setText("Living Room");
+                break;
+            case 2:
+                selectedFragment = new BedroomFragment();
+                tvRoom.setText("Bedroom");
+                break;
+            case 3:
+                selectedFragment = new KitchenFragment();
+                tvRoom.setText("Kitchen");
+                break;
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, selectedFragment).commit();
+        return;
+    }
+
     private void initView() {
-        chart = findViewById(R.id.chart);
         tvRoom = findViewById(R.id.tv_room);
-//        viewPager = findViewById(R.id.vp_chart);
         dotsLayout = findViewById(R.id.layout_dots);
 
         voltLivingRoom = findViewById(R.id.voltLivingRoom);
@@ -215,82 +287,9 @@ public class MainActivity extends BaseActivity {
         statusBedroom = findViewById(R.id.tvStatusBedroom);
 
         imgInfo = findViewById(R.id.imgInfo);
-    }
 
-    public void GraphSuhu(final int limit) {
-        dbReff.child("SmartEnergyMeter").limitToLast(limit).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Entry> data = new ArrayList<>();
-                if (dataSnapshot.hasChildren()) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        DataChart dataChart = child.getValue(DataChart.class);
-                        data.add(new Entry(dataChart.getTime(), dataChart.getTegangan()));
-                    }
-                    showChart(data);
-                    lineDataSet.setDrawCircles(false);
-                }
-                chart.invalidate();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void showChart(ArrayList<Entry> data) {
-        lineDataSet.setValues(data);
-        lineDataSet.setLabel("DataSet 1");
-        lineDataSet.setDrawFilled(true);
-
-        lineDataSet.setLineWidth(2f);
-        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-//        lineDataSet.setCubicIntensity(0.05f);
-        lineDataSet.setDrawValues(false);
-        iLineDataSets.clear();
-        iLineDataSets.add(lineDataSet);
-        lineData = new LineData(iLineDataSets);
-
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setDrawGridLines(false);
-        xAxis.setLabelRotationAngle(0f);//45
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setGranularity(1f);
-        xAxis.setDrawLabels(false);
-        xAxis.setLabelCount(3, true);
-        xAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                Date date = new Date((long) value);
-                SimpleDateFormat fmt;
-                fmt = new SimpleDateFormat("HH:mm zz");
-                fmt.setTimeZone(TimeZone.getDefault());
-                String s = fmt.format(date);
-                return s;
-            }
-        });
-
-        YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.LEFT);
-        yAxisL.setDrawGridLines(false);
-        yAxisL.setDrawLabels(false);
-        yAxisL.setAxisMinimum(0);
-        yAxisL.setAxisMaximum(100);
-
-        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-        mv.setChartView(chart);
-        chart.setMarker(mv);
-        chart.getLegend().setEnabled(false);
-        chart.getDescription().setEnabled(false);
-        chart.getAxisRight().setEnabled(false);
-        chart.getAxisLeft().setEnabled(false);
-        chart.getXAxis().setEnabled(false);
-        chart.notifyDataSetChanged();
-        chart.clear();
-        chart.setData(lineData);
-        chart.invalidate();
-        chart.moveViewTo(lineData.getEntryCount(), 50L, YAxis.AxisDependency.LEFT);
+        btnBackRound = findViewById(R.id.btn_back_round);
+        btnNextRound = findViewById(R.id.btn_next_round);
     }
 
     private void addBottomDots(int currentPage) {
@@ -311,74 +310,4 @@ public class MainActivity extends BaseActivity {
         if (dots.length > 0)
             dots[currentPage].setTextColor(colorsActive[currentPage]);
     }
-
-//    private int getItem() {
-//        return viewPager.getCurrentItem() + 1;
-//    }
-//
-//    final ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-//
-//        @Override
-//        public void onPageSelected(int position) {
-//            addBottomDots(position);
-//
-//            int nameRoom;
-//
-//            switch (position) {
-//                case 1:
-//                    nameRoom = R.string.kitchen;
-//                    break;
-//                case 2:
-//                    nameRoom = R.string.bedroom;
-//                    break;
-//                default:
-//                    nameRoom = R.string.living_room;
-//                    break;
-//            }
-//            tvRoom.setText(nameRoom);
-//        }
-//
-//        @Override
-//        public void onPageScrolled(int arg0, float arg1, int arg2) {
-//
-//        }
-//
-//        @Override
-//        public void onPageScrollStateChanged(int arg0) {
-//
-//        }
-//    };
-//
-//    public class MyViewPagerAdapter extends PagerAdapter {
-//
-//        public MyViewPagerAdapter() {
-//        }
-//
-//        @Override
-//        public Object instantiateItem(ViewGroup container, int position) {
-//            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//
-//            View view = layoutInflater.inflate(layouts[position], container, false);
-//            container.addView(view);
-//
-//            return view;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return layouts.length;
-//        }
-//
-//        @Override
-//        public boolean isViewFromObject(View view, Object obj) {
-//            return view == obj;
-//        }
-//
-//
-//        @Override
-//        public void destroyItem(ViewGroup container, int position, Object object) {
-//            View view = (View) object;
-//            container.removeView(view);
-//        }
-//    }
 }

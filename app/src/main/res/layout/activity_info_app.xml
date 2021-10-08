@@ -103,9 +103,9 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="120dp"
-            app:civ_circle_background_color="@color/bg_white_blue"
-            android:scaleType="centerCrop"
             android:layout_height="120dp"
-            android:src="@drawable/img_musda" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_musda"
+            app:civ_circle_background_color="@color/bg_white_blue" />
     </LinearLayout>
 </RelativeLayout>
