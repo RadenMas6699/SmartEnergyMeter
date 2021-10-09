@@ -11,7 +11,9 @@
         android:roundIcon="@drawable/ic_wireless_energy_color"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartEnergyMeter">
-        <activity android:name=".InfoAppActivity" />
+        <activity
+            android:name=".InfoAppActivity"
+            android:theme="@style/Splash" />
         <activity android:name=".ui.MainActivity" />
         <activity
             android:name=".ui.SplashActivity"

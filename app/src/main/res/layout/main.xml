@@ -35,43 +35,39 @@
             android:src="@drawable/ic_info"
             app:tint="@color/white" />
 
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/content_chart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_below="@id/imgInfo" />
 
-            <FrameLayout
-                android:id="@+id/content_chart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <ImageButton
+            android:id="@+id/btn_back_round"
+            android:layout_width="42dp"
+            android:layout_height="62dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:background="@android:color/transparent"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_back_round"
+            app:tint="@color/semiTransparent" />
 
-            <ImageButton
-                android:id="@+id/btn_back_round"
-                android:layout_width="42dp"
-                android:layout_height="62dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="4dp"
-                android:background="@android:color/transparent"
-                android:foreground="?attr/selectableItemBackground"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_back_round"
-                app:tint="@color/semiTransparent" />
-
-            <ImageButton
-                android:id="@+id/btn_next_round"
-                android:layout_width="42dp"
-                android:layout_height="62dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="4dp"
-                android:background="@android:color/transparent"
-                android:foreground="?attr/selectableItemBackground"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_next_round"
-                app:tint="@color/semiTransparent" />
-        </RelativeLayout>
+        <ImageButton
+            android:id="@+id/btn_next_round"
+            android:layout_width="42dp"
+            android:layout_height="62dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:background="@android:color/transparent"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_next_round"
+            app:tint="@color/semiTransparent" />
 
         <LinearLayout
             android:id="@+id/layout_dots"
@@ -138,27 +134,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:fontFamily="@font/bold"
+                            android:text="@string/value_v"
+                            android:textStyle="bold" />
+
 
                         <TextView
                             android:id="@+id/ampereLivingRoom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:text="@string/value_a"
+                            android:textStyle="bold" />
+
 
                         <TextView
                             android:id="@+id/wattLivingRoom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:text="@string/value_w"
+                            android:textStyle="bold" />
+
 
                         <TextView
                             android:id="@+id/tvStatusLivingRoom"
@@ -237,27 +234,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:text="@string/value_v"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/ampereBedroom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:text="@string/value_a"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/wattBedroom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:text="@string/value_w"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvStatusBedroom"
@@ -337,27 +331,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:text="@string/value_v"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/ampereKitchen"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:text="@string/value_a"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/wattKitchen"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="16dp"
-                            android:text="@string/dash"
-                            android:textStyle="bold"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                            android:text="@string/value_w"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvStatusKitchen"

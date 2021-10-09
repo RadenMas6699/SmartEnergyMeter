@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.radenmas.smartenergymeter.DataChart;
 import com.radenmas.smartenergymeter.InfoAppActivity;
@@ -20,8 +23,6 @@ import com.radenmas.smartenergymeter.R;
 import com.radenmas.smartenergymeter.base.BaseActivity;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.text.DecimalFormat;
 
 public class MainActivity extends BaseActivity {
     private TextView tvRoom, voltLivingRoom, ampereLivingRoom, wattLivingRoom,
@@ -32,8 +33,11 @@ public class MainActivity extends BaseActivity {
     private int[] layouts;
     private ImageView switchLivingRoom, switchKitchen, switchBedroom, stateLivingRoom, stateKitchen, stateBedroom;
     private ImageButton imgInfo, btnBackRound, btnNextRound;
+    int iWatt1, iWatt2, iWatt3;
+    float fAmpere1, fAmpere2, fAmpere3;
     int a, b, c;
     int count = 0;
+
 
     @Override
     protected int getLayoutResource() {
@@ -60,8 +64,35 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getData() {
+        DatabaseReference dbLast = FirebaseDatabase.getInstance().getReference("SmartEnergyMeter");
+        Query query = dbLast.orderByKey().limitToLast(1);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    DataChart dataChart = child.getValue(DataChart.class);
 
+                    voltLivingRoom.setText("V : " + dataChart.getVolt() + " V");
+                    voltBedroom.setText("V : " + dataChart.getVolt() + " V");
+                    voltKitchen.setText("V : " + dataChart.getVolt() + " V");
+
+                    fAmpere1 = dataChart.getArus1();
+                    fAmpere2 = dataChart.getArus2();
+                    fAmpere3 = dataChart.getArus3();
+
+                    iWatt1 = dataChart.getWatt1();
+                    iWatt2 = dataChart.getWatt2();
+                    iWatt3 = dataChart.getWatt3();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
+
 
     private void cekStatus() {
         dbReff.addValueEventListener(new ValueEventListener() {
@@ -76,32 +107,29 @@ public class MainActivity extends BaseActivity {
 
                 if (a == 1) {
                     a = 0;
-                    switchLivingRoom.setImageResource(R.drawable.ic_power_on);
-                    stateLivingRoom.setVisibility(View.VISIBLE);
-                    statusLivingRoom.setText(R.string.status_on);
+                    setOnPower(fAmpere1, iWatt1, ampereLivingRoom, wattLivingRoom,
+                            switchLivingRoom, stateLivingRoom, statusLivingRoom);
                 } else {
                     a = 1;
-                    setOffPower(voltLivingRoom, ampereLivingRoom, wattLivingRoom,
+                    setOffPower(ampereLivingRoom, wattLivingRoom,
                             switchLivingRoom, stateLivingRoom, statusLivingRoom);
                 }
                 if (b == 1) {
                     b = 0;
-                    switchBedroom.setImageResource(R.drawable.ic_power_on);
-                    stateBedroom.setVisibility(View.VISIBLE);
-                    statusBedroom.setText(R.string.status_on);
+                    setOnPower(fAmpere2, iWatt2, ampereBedroom, wattBedroom,
+                            switchBedroom, stateBedroom, statusBedroom);
                 } else {
                     b = 1;
-                    setOffPower(voltBedroom, ampereBedroom, wattBedroom,
+                    setOffPower(ampereBedroom, wattBedroom,
                             switchBedroom, stateBedroom, statusBedroom);
                 }
                 if (c == 1) {
                     c = 0;
-                    switchKitchen.setImageResource(R.drawable.ic_power_on);
-                    stateKitchen.setVisibility(View.VISIBLE);
-                    statusKitchen.setText(R.string.status_on);
+                    setOnPower(fAmpere3, iWatt3, ampereKitchen, wattKitchen,
+                            switchKitchen, stateKitchen, statusKitchen);
                 } else {
                     c = 1;
-                    setOffPower(voltKitchen, ampereKitchen, wattKitchen,
+                    setOffPower(ampereKitchen, wattKitchen,
                             switchKitchen, stateKitchen, statusKitchen);
                 }
             }
@@ -147,16 +175,12 @@ public class MainActivity extends BaseActivity {
             if (a == 1) {
                 a = 0;
                 dbReff.child("lampu_1").setValue(1);
-                voltLivingRoom.setText("220 V");
-                ampereLivingRoom.setText("2.5 A");
-                wattLivingRoom.setText("354 W");
-                switchLivingRoom.setImageResource(R.drawable.ic_power_on);
-                stateLivingRoom.setVisibility(View.VISIBLE);
-                statusLivingRoom.setText(R.string.status_on);
+                setOnPower(fAmpere1, iWatt1, ampereLivingRoom, wattLivingRoom,
+                        switchLivingRoom, stateLivingRoom, statusLivingRoom);
             } else {
                 a = 1;
                 dbReff.child("lampu_1").setValue(0);
-                setOffPower(voltLivingRoom, ampereLivingRoom, wattLivingRoom,
+                setOffPower(ampereLivingRoom, wattLivingRoom,
                         switchLivingRoom, stateLivingRoom, statusLivingRoom);
             }
         });
@@ -165,16 +189,12 @@ public class MainActivity extends BaseActivity {
             if (b == 1) {
                 b = 0;
                 dbReff.child("lampu_2").setValue(1);
-                voltBedroom.setText("220 V");
-                ampereBedroom.setText("4 A");
-                wattBedroom.setText("350 W");
-                switchBedroom.setImageResource(R.drawable.ic_power_on);
-                stateBedroom.setVisibility(View.VISIBLE);
-                statusBedroom.setText(R.string.status_on);
+                setOnPower(fAmpere2, iWatt2, ampereBedroom, wattBedroom,
+                        switchBedroom, stateBedroom, statusBedroom);
             } else {
                 b = 1;
                 dbReff.child("lampu_2").setValue(0);
-                setOffPower(voltBedroom, ampereBedroom, wattBedroom,
+                setOffPower(ampereBedroom, wattBedroom,
                         switchBedroom, stateBedroom, statusBedroom);
             }
         });
@@ -183,52 +203,28 @@ public class MainActivity extends BaseActivity {
             if (c == 1) {
                 c = 0;
                 dbReff.child("lampu_3").setValue(1);
-                voltKitchen.setText("220 V");
-                ampereKitchen.setText("1 A");
-                wattKitchen.setText("30 W");
-                switchKitchen.setImageResource(R.drawable.ic_power_on);
-                stateKitchen.setVisibility(View.VISIBLE);
-                statusKitchen.setText(R.string.status_on);
+                setOnPower(fAmpere3, iWatt3, ampereKitchen, wattKitchen,
+                        switchKitchen, stateKitchen, statusKitchen);
             } else {
                 c = 1;
                 dbReff.child("lampu_3").setValue(0);
-                setOffPower(voltKitchen, ampereKitchen, wattKitchen,
+                setOffPower(ampereKitchen, wattKitchen,
                         switchKitchen, stateKitchen, statusKitchen);
             }
         });
     }
 
-    private void setOffPower(TextView volt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
-        volt.setText(R.string.dash);
-        ampere.setText(R.string.dash);
-        watt.setText(R.string.dash);
+    private void setOffPower(TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
+        ampere.setText(R.string.value_a);
+        watt.setText(R.string.value_w);
         switc.setImageResource(R.drawable.ic_power_off);
         state.setVisibility(View.INVISIBLE);
         status.setText(R.string.status_off);
     }
 
-    private void setOnPower(String path, TextView volt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
-        dbReff.child("SmartEnergyMeter").limitToLast(1).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    DataChart data = dataSnapshot.getValue(DataChart.class);
-                    DecimalFormat koma = new DecimalFormat("#.##");
-
-                    volt.setText(data.getVolt() + " V");
-                    ampere.setText("" + data.getArus1() + " A");
-                    watt.setText("" + data.getWatt1()+" W");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-        volt.setText(R.string.dash);
-        ampere.setText(R.string.dash);
-        watt.setText(R.string.dash);
+    private void setOnPower(float strampere, float strwatt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
+        ampere.setText("A : " + strampere + " A");
+        watt.setText("W: " + strwatt + " W");
         switc.setImageResource(R.drawable.ic_power_on);
         state.setVisibility(View.VISIBLE);
         status.setText(R.string.status_on);

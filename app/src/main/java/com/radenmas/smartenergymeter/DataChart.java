@@ -1,25 +1,38 @@
 package com.radenmas.smartenergymeter;
 
 public class DataChart {
-    float volt, arus1, arus2, arus3, watt1, watt2, watt3;
+    int volt, watt1, watt2, watt3;
+    float arus1, arus2, arus3;
     long time;
 
     public DataChart() {
     }
 
-    public DataChart(float volt, float arus1, float arus2, float arus3, float watt1, float watt2, float watt3, long time) {
+    public DataChart(int volt, int watt1, int watt2, int watt3, float arus1, float arus2, float arus3, long time) {
         this.volt = volt;
-        this.arus1 = arus1;
-        this.arus2 = arus2;
-        this.arus3 = arus3;
         this.watt1 = watt1;
         this.watt2 = watt2;
         this.watt3 = watt3;
+        this.arus1 = arus1;
+        this.arus2 = arus2;
+        this.arus3 = arus3;
         this.time = time;
     }
 
-    public float getVolt() {
+    public int getVolt() {
         return volt;
+    }
+
+    public int getWatt1() {
+        return watt1;
+    }
+
+    public int getWatt2() {
+        return watt2;
+    }
+
+    public int getWatt3() {
+        return watt3;
     }
 
     public float getArus1() {
@@ -32,18 +45,6 @@ public class DataChart {
 
     public float getArus3() {
         return arus3;
-    }
-
-    public float getWatt1() {
-        return watt1;
-    }
-
-    public float getWatt2() {
-        return watt2;
-    }
-
-    public float getWatt3() {
-        return watt3;
     }
 
     public long getTime() {

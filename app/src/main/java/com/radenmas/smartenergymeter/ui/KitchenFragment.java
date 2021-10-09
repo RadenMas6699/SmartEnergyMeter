@@ -25,7 +25,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.radenmas.smartenergymeter.DataChart;
 import com.radenmas.smartenergymeter.MarkerAmpere;
-import com.radenmas.smartenergymeter.MarkerVolt;
 import com.radenmas.smartenergymeter.R;
 
 import java.util.ArrayList;

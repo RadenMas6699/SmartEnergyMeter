@@ -5,10 +5,36 @@
     android:layout_height="match_parent"
     android:background="@color/sky_blue">
 
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/ic_wireless_energy_outline"
+        app:tint="#3D9FFF" />
+
+    <ImageView
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-70dp"
+        android:layout_marginEnd="-60dp"
+        android:src="@drawable/img_blob" />
+
+    <ImageButton
+        android:id="@+id/img_back"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/transparent"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="Back"
+        android:src="@drawable/ic_back" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="135dp"
         android:background="@drawable/bg_white_round_top"
         android:orientation="vertical"
         android:paddingHorizontal="16dp">
@@ -40,11 +66,11 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/app_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="@string/app_version"
             android:textSize="14sp" />
 
         <TextView
@@ -96,7 +122,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="66dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="8dp">
@@ -104,8 +130,11 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:outlineSpotShadowColor="@color/black"
             android:scaleType="centerCrop"
             android:src="@drawable/img_musda"
+            app:civ_border_color="@color/dark_icon"
+            app:civ_border_width="1.5dp"
             app:civ_circle_background_color="@color/bg_white_blue" />
     </LinearLayout>
 </RelativeLayout>
