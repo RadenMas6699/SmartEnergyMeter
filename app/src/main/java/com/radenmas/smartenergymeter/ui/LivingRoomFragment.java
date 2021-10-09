@@ -134,9 +134,9 @@ public class LivingRoomFragment extends Fragment {
         yAxisL.setAxisMinimum(0);
         yAxisL.setAxisMaximum(20);
 
-        MarkerAmpere mv = new MarkerAmpere(getContext(), R.layout.custom_marker_view);
-        mv.setChartView(chart);
-        chart.setMarker(mv);
+//        MarkerAmpere mv = new MarkerAmpere(getContext(), R.layout.custom_marker_view);
+//        mv.setChartView(chart);
+//        chart.setMarker(mv);
 
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);

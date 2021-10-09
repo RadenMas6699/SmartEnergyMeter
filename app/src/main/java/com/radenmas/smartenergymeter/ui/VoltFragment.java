@@ -134,9 +134,9 @@ public class VoltFragment extends Fragment {
         yAxisL.setAxisMinimum(200);
         yAxisL.setAxisMaximum(240);
 
-        MarkerVolt mv = new MarkerVolt(getContext(), R.layout.custom_marker_view);
-        mv.setChartView(chart);
-        chart.setMarker(mv);
+//        MarkerVolt mv = new MarkerVolt(getContext(), R.layout.custom_marker_view);
+//        mv.setChartView(chart);
+//        chart.setMarker(mv);
 
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
