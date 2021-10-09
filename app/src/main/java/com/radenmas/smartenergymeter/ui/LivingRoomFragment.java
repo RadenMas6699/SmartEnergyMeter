@@ -132,7 +132,7 @@ public class LivingRoomFragment extends Fragment {
         yAxisL.setDrawGridLines(false);
         yAxisL.setDrawLabels(true);
         yAxisL.setAxisMinimum(0);
-        yAxisL.setAxisMaximum(20);
+        yAxisL.setAxisMaximum(7);
 
 //        MarkerAmpere mv = new MarkerAmpere(getContext(), R.layout.custom_marker_view);
 //        mv.setChartView(chart);
@@ -140,7 +140,7 @@ public class LivingRoomFragment extends Fragment {
 
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
-        chart.getAxisRight().setEnabled(false);
+//        chart.getAxisRight().setEnabled(false);
         chart.getAxisLeft().setEnabled(false);
         chart.notifyDataSetChanged();
         chart.clear();

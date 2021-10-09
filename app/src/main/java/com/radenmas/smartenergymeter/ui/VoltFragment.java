@@ -140,7 +140,7 @@ public class VoltFragment extends Fragment {
 
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
-        chart.getAxisRight().setEnabled(false);
+//        chart.getAxisRight().setEnabled(false);
         chart.getAxisLeft().setEnabled(false);
         chart.notifyDataSetChanged();
         chart.clear();
