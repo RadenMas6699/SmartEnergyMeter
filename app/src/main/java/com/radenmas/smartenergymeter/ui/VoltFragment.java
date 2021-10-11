@@ -128,8 +128,8 @@ public class VoltFragment extends Fragment {
             }
         });
 
-        YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.LEFT);
-        yAxisL.setDrawGridLines(false);
+        YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.RIGHT);
+        yAxisL.setDrawGridLines(true);
         yAxisL.setDrawLabels(true);
         yAxisL.setAxisMinimum(200);
         yAxisL.setAxisMaximum(240);

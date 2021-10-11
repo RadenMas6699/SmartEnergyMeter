@@ -128,7 +128,7 @@ public class KitchenFragment extends Fragment {
             }
         });
 
-        YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.LEFT);
+        YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.RIGHT);
         yAxisL.setDrawGridLines(false);
         yAxisL.setDrawLabels(true);
         yAxisL.setAxisMinimum(0);

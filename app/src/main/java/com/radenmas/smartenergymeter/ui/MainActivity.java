@@ -1,11 +1,11 @@
 package com.radenmas.smartenergymeter.ui;
 
 import android.content.Intent;
-import android.text.Html;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,24 +24,27 @@ import com.radenmas.smartenergymeter.base.BaseActivity;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends BaseActivity {
-    private TextView tvRoom, voltLivingRoom, ampereLivingRoom, wattLivingRoom,
+    private TextView tvAppName, voltLivingRoom, ampereLivingRoom, wattLivingRoom,
             voltKitchen, ampereKitchen, wattKitchen,
             voltBedroom, ampereBedroom, wattBedroom,
             statusLivingRoom, statusKitchen, statusBedroom;
-    private LinearLayout dotsLayout;
-    private int[] layouts;
     private ImageView switchLivingRoom, switchKitchen, switchBedroom, stateLivingRoom, stateKitchen, stateBedroom;
-    private ImageButton imgInfo, btnBackRound, btnNextRound;
+    private ImageButton imgInfo;
+    private RadioGroup radioGroup;
+    private RadioButton radioVolt, radioLivingRoom, radioBedroom, radioKitchen;
     int iWatt1, iWatt2, iWatt3;
     float fAmpere1, fAmpere2, fAmpere3;
     int a, b, c;
-    int count = 0;
+
+    DecimalFormat koma = new DecimalFormat("#.##");
 
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.main;
+        return R.layout.activity_main;
     }
 
     @Override
@@ -51,15 +54,10 @@ public class MainActivity extends BaseActivity {
         cekStatus();
         getData();
 
-        tvRoom.setText("Voltase");
+        tvAppName.setText(R.string.app_name);
 
-        layouts = new int[]{
-                R.layout.fragment_chart,
-                R.layout.fragment_chart,
-                R.layout.fragment_chart,
-                R.layout.fragment_chart};
+        selectTextView(radioVolt, radioLivingRoom, radioBedroom, radioKitchen);
 
-        addBottomDots(0);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new VoltFragment()).commit();
     }
 
@@ -79,6 +77,7 @@ public class MainActivity extends BaseActivity {
                     fAmpere1 = dataChart.getArus1();
                     fAmpere2 = dataChart.getArus2();
                     fAmpere3 = dataChart.getArus3();
+
 
                     iWatt1 = dataChart.getWatt1();
                     iWatt2 = dataChart.getWatt2();
@@ -147,27 +146,28 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
         });
 
-        btnBackRound.setOnClickListener(view1 -> {
-            if (count <= 0) {
-                btnBackRound.setClickable(false);
-                btnNextRound.setClickable(true);
-            } else {
-                btnBackRound.setClickable(true);
-                count = count - 1;
-                changeChart(count);
-                addBottomDots(count);
-            }
-        });
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
 
-        btnNextRound.setOnClickListener(view1 -> {
-            if (count >= 3) {
-                btnBackRound.setClickable(true);
-                btnNextRound.setClickable(false);
-            } else {
-                btnNextRound.setClickable(true);
-                count = count + 1;
-                changeChart(count);
-                addBottomDots(count);
+                    case R.id.radioLivingRoom:
+                        selectTextView(radioLivingRoom, radioVolt, radioBedroom, radioKitchen);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new LivingRoomFragment()).commit();
+                        break;
+                    case R.id.radioBedroom:
+                        selectTextView(radioBedroom, radioLivingRoom, radioVolt, radioKitchen);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new BedroomFragment()).commit();
+                        break;
+                    case R.id.radioKitchen:
+                        selectTextView(radioKitchen, radioVolt, radioLivingRoom, radioBedroom);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new KitchenFragment()).commit();
+                        break;
+                    default:
+                        selectTextView(radioVolt, radioLivingRoom, radioBedroom, radioKitchen);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new VoltFragment()).commit();
+                        break;
+                }
             }
         });
 
@@ -224,7 +224,7 @@ public class MainActivity extends BaseActivity {
 
     private void setOnPower(float strampere, float strwatt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
         ampere.setText("A : " + strampere + " A");
-        watt.setText("W: " + strwatt + " W");
+        watt.setText("W: " + koma.format(strampere) + " W");
         switc.setImageResource(R.drawable.ic_power_on);
         state.setVisibility(View.VISIBLE);
         status.setText(R.string.status_on);
@@ -235,19 +235,19 @@ public class MainActivity extends BaseActivity {
         switch (count) {
             case 0:
                 selectedFragment = new VoltFragment();
-                tvRoom.setText("Voltase");
+                tvAppName.setText(R.string.app_name);
                 break;
             case 1:
                 selectedFragment = new LivingRoomFragment();
-                tvRoom.setText("Living Room");
+                tvAppName.setText(R.string.app_name);
                 break;
             case 2:
                 selectedFragment = new BedroomFragment();
-                tvRoom.setText("Bedroom");
+                tvAppName.setText(R.string.app_name);
                 break;
             case 3:
                 selectedFragment = new KitchenFragment();
-                tvRoom.setText("Kitchen");
+                tvAppName.setText(R.string.app_name);
                 break;
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, selectedFragment).commit();
@@ -255,8 +255,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
-        tvRoom = findViewById(R.id.tv_room);
-        dotsLayout = findViewById(R.id.layout_dots);
+        tvAppName = findViewById(R.id.tv_app_name);
+        radioGroup = findViewById(R.id.radioGroup);
+        radioVolt = findViewById(R.id.radioVolt);
+        radioLivingRoom = findViewById(R.id.radioLivingRoom);
+        radioBedroom = findViewById(R.id.radioBedroom);
+        radioKitchen = findViewById(R.id.radioKitchen);
 
         voltLivingRoom = findViewById(R.id.voltLivingRoom);
         ampereLivingRoom = findViewById(R.id.ampereLivingRoom);
@@ -283,27 +287,17 @@ public class MainActivity extends BaseActivity {
         statusBedroom = findViewById(R.id.tvStatusBedroom);
 
         imgInfo = findViewById(R.id.imgInfo);
-
-        btnBackRound = findViewById(R.id.btn_back_round);
-        btnNextRound = findViewById(R.id.btn_next_round);
     }
 
-    private void addBottomDots(int currentPage) {
-        TextView[] dots = new TextView[layouts.length];
+    private void selectTextView(TextView tvSelected, TextView tvUnselected1, TextView tvUnselected2, TextView tvUnselected3) {
+        tvSelected.setBackgroundResource(R.drawable.bg_btn_selected);
+        tvUnselected1.setBackgroundResource(R.drawable.bg_btn_unselected);
+        tvUnselected2.setBackgroundResource(R.drawable.bg_btn_unselected);
+        tvUnselected3.setBackgroundResource(R.drawable.bg_btn_unselected);
 
-        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
-        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
-
-        dotsLayout.removeAllViews();
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226;"));
-            dots[i].setTextSize(35);
-            dots[i].setTextColor(colorsInactive[currentPage]);
-            dotsLayout.addView(dots[i]);
-        }
-
-        if (dots.length > 0)
-            dots[currentPage].setTextColor(colorsActive[currentPage]);
+        tvSelected.setTextColor(getResources().getColor(R.color.black));
+        tvUnselected1.setTextColor(getResources().getColor(android.R.color.white));
+        tvUnselected2.setTextColor(getResources().getColor(android.R.color.white));
+        tvUnselected3.setTextColor(getResources().getColor(android.R.color.white));
     }
 }
