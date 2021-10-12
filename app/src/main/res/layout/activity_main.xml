@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="12dp"
+            android:text="@string/app_name"
             android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -39,6 +40,7 @@
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:paddingHorizontal="12dp"
+                android:paddingTop="2dp"
                 android:text="@string/voltase"
                 android:textColor="@color/white" />
 
@@ -50,6 +52,7 @@
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:paddingHorizontal="12dp"
+                android:paddingTop="2dp"
                 android:text="@string/living_room"
                 android:textColor="@color/white" />
 
@@ -61,6 +64,7 @@
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:paddingHorizontal="12dp"
+                android:paddingTop="2dp"
                 android:text="@string/bedroom"
                 android:textColor="@color/white" />
 
@@ -72,6 +76,7 @@
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:paddingHorizontal="12dp"
+                android:paddingTop="2dp"
                 android:text="@string/kitchen"
                 android:textColor="@color/white" />
         </RadioGroup>

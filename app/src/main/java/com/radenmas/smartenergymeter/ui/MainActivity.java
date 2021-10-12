@@ -9,7 +9,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DecimalFormat;
 
 public class MainActivity extends BaseActivity {
-    private TextView tvAppName, voltLivingRoom, ampereLivingRoom, wattLivingRoom,
+    private TextView voltLivingRoom, ampereLivingRoom, wattLivingRoom,
             voltKitchen, ampereKitchen, wattKitchen,
             voltBedroom, ampereBedroom, wattBedroom,
             statusLivingRoom, statusKitchen, statusBedroom;
@@ -53,8 +52,6 @@ public class MainActivity extends BaseActivity {
         onClick();
         cekStatus();
         getData();
-
-        tvAppName.setText(R.string.app_name);
 
         selectTextView(radioVolt, radioLivingRoom, radioBedroom, radioKitchen);
 
@@ -230,32 +227,7 @@ public class MainActivity extends BaseActivity {
         status.setText(R.string.status_on);
     }
 
-    private void changeChart(int count) {
-        Fragment selectedFragment = null;
-        switch (count) {
-            case 0:
-                selectedFragment = new VoltFragment();
-                tvAppName.setText(R.string.app_name);
-                break;
-            case 1:
-                selectedFragment = new LivingRoomFragment();
-                tvAppName.setText(R.string.app_name);
-                break;
-            case 2:
-                selectedFragment = new BedroomFragment();
-                tvAppName.setText(R.string.app_name);
-                break;
-            case 3:
-                selectedFragment = new KitchenFragment();
-                tvAppName.setText(R.string.app_name);
-                break;
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, selectedFragment).commit();
-        return;
-    }
-
     private void initView() {
-        tvAppName = findViewById(R.id.tv_app_name);
         radioGroup = findViewById(R.id.radioGroup);
         radioVolt = findViewById(R.id.radioVolt);
         radioLivingRoom = findViewById(R.id.radioLivingRoom);

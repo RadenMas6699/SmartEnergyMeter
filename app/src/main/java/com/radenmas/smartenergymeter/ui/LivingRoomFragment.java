@@ -24,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.radenmas.smartenergymeter.DataChart;
-import com.radenmas.smartenergymeter.MarkerAmpere;
 import com.radenmas.smartenergymeter.R;
 
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class LivingRoomFragment extends Fragment {
         initView(view);
         onClick();
 
-        Graph(600);
+        Graph(500);
 
         chart.getDescription().setEnabled(false);
         chart.setNoDataText(getString(R.string.living_room));
@@ -134,13 +133,8 @@ public class LivingRoomFragment extends Fragment {
         yAxisL.setAxisMinimum(0);
         yAxisL.setAxisMaximum(7);
 
-//        MarkerAmpere mv = new MarkerAmpere(getContext(), R.layout.custom_marker_view);
-//        mv.setChartView(chart);
-//        chart.setMarker(mv);
-
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
-//        chart.getAxisRight().setEnabled(false);
         chart.getAxisLeft().setEnabled(false);
         chart.notifyDataSetChanged();
         chart.clear();

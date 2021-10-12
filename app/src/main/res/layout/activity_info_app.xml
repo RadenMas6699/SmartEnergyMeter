@@ -6,9 +6,9 @@
     android:background="@color/sky_blue">
 
     <ImageView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="52dp"
         android:src="@drawable/ic_wireless_energy_outline"
         app:tint="#3D9FFF" />
 
@@ -24,12 +24,24 @@
         android:id="@+id/img_back"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
         android:foreground="?attr/selectableItemBackground"
         android:onClick="Back"
         android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/tv_app_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@id/img_back"
+        android:text="Info Aplikasi"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -133,7 +145,7 @@
             android:outlineSpotShadowColor="@color/black"
             android:scaleType="centerCrop"
             android:src="@drawable/img_musda"
-            app:civ_border_color="@color/dark_icon"
+            app:civ_border_color="@color/white"
             app:civ_border_width="1.5dp"
             app:civ_circle_background_color="@color/bg_white_blue" />
     </LinearLayout>
