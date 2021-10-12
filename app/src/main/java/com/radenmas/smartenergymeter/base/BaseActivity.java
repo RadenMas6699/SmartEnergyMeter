@@ -28,7 +28,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         myCodeHere();
     }
 
-    protected void toast(String message) {
-        Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_SHORT).show();
-    }
 }
