@@ -114,6 +114,7 @@ public class MainActivity extends BaseActivity {
                     a = 0;
                     setOnPower(fAmpere1, iWatt1, ampereLampOne, wattLampOne,
                             switchLampOne, stateLampOne, statusLampOne);
+                    notif("Lampu Satu");
                 } else {
                     a = 1;
                     setOffPower(ampereLampOne, wattLampOne,
@@ -123,6 +124,7 @@ public class MainActivity extends BaseActivity {
                     b = 0;
                     setOnPower(fAmpere2, iWatt2, ampereLampTwo, wattLampTwo,
                             switchLampTwo, stateLampTwo, statusLampTwo);
+                    notif("Lampu Dua");
                 } else {
                     b = 1;
                     setOffPower(ampereLampTwo, wattLampTwo,
@@ -132,6 +134,7 @@ public class MainActivity extends BaseActivity {
                     c = 0;
                     setOnPower(fAmpere3, iWatt3, amperePlug, wattPlug,
                             switchPlug, statePlug, statusPlug);
+                    notif("Stop Kontak");
                 } else {
                     c = 1;
                     setOffPower(amperePlug, wattPlug,
