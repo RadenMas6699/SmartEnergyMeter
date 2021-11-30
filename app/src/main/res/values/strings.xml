@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart Energy Meter</string>
+    <string name="app_name">Smart Power Meter</string>
     <string name="developer_name">Musdalipa Sari</string>
     <string name="prodi_name">Program Studi Pendidikan Teknik Elektro</string>
     <string name="major_name">Jurusan Pendidikan Teknik Elektro</string>
@@ -19,7 +19,5 @@
     <string name="value_a">A : -</string>
     <string name="value_w">W: -</string>
     <string name="dash">-</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="voltase">Voltase</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.radenmas.smartenergymeter;
+package com.radenmas.smartpowermeter;
 
 public class DataChart {
     int volt, watt1, watt2, watt3;

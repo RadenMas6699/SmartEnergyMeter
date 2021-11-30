@@ -1,4 +1,4 @@
-package com.radenmas.smartenergymeter;
+package com.radenmas.smartpowermeter;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.TextView;
 
-import com.radenmas.smartenergymeter.base.BaseActivity;
+import com.radenmas.smartpowermeter.base.BaseActivity;
 
 public class InfoAppActivity extends BaseActivity {
     private TextView app_version;

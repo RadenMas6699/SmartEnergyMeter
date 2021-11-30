@@ -1,4 +1,4 @@
-package com.radenmas.smartenergymeter;
+package com.radenmas.smartpowermeter;
 
 import android.content.Context;
 

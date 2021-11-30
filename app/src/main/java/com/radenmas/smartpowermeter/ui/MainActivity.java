@@ -1,4 +1,4 @@
-package com.radenmas.smartenergymeter.ui;
+package com.radenmas.smartpowermeter.ui;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -23,10 +23,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.radenmas.smartenergymeter.DataChart;
-import com.radenmas.smartenergymeter.InfoAppActivity;
-import com.radenmas.smartenergymeter.R;
-import com.radenmas.smartenergymeter.base.BaseActivity;
+import com.radenmas.smartpowermeter.DataChart;
+import com.radenmas.smartpowermeter.InfoAppActivity;
+import com.radenmas.smartpowermeter.R;
+import com.radenmas.smartpowermeter.base.BaseActivity;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,8 +1,7 @@
-package com.radenmas.smartenergymeter.base;
+package com.radenmas.smartpowermeter.base;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 

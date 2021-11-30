@@ -1,4 +1,4 @@
-package com.radenmas.smartenergymeter.ui;
+package com.radenmas.smartpowermeter.ui;
 
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -23,21 +23,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.radenmas.smartenergymeter.DataChart;
-import com.radenmas.smartenergymeter.R;
+import com.radenmas.smartpowermeter.DataChart;
+import com.radenmas.smartpowermeter.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class LampTwoFragment extends Fragment {
+public class LampOneFragment extends Fragment {
 
     LineChart chart;
     LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
 
-    public LampTwoFragment() {
+    public LampOneFragment() {
         // Required empty public constructor
     }
 
@@ -53,7 +53,7 @@ public class LampTwoFragment extends Fragment {
         Graph(500);
 
         chart.getDescription().setEnabled(false);
-        chart.setNoDataText(getString(R.string.lamp_two));
+        chart.setNoDataText(getString(R.string.lamp_one));
         chart.setNoDataTextColor(getResources().getColor(R.color.dark_icon));
         chart.invalidate();
 
@@ -80,7 +80,7 @@ public class LampTwoFragment extends Fragment {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
 
                         DataChart dataChart = child.getValue(DataChart.class);
-                        data.add(new Entry(dataChart.getTime(), dataChart.getArus2()));
+                        data.add(new Entry(dataChart.getTime(), dataChart.getArus1()));
                     }
                     showChart(data);
                     lineDataSet.setDrawCircles(false);

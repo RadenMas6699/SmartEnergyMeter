@@ -1,10 +1,10 @@
-package com.radenmas.smartenergymeter.ui;
+package com.radenmas.smartpowermeter.ui;
 
 import android.content.Intent;
 import android.os.Handler;
 
-import com.radenmas.smartenergymeter.R;
-import com.radenmas.smartenergymeter.base.BaseActivity;
+import com.radenmas.smartpowermeter.R;
+import com.radenmas.smartpowermeter.base.BaseActivity;
 
 public class SplashActivity extends BaseActivity {
 

@@ -1,4 +1,4 @@
-package com.radenmas.smartenergymeter.ui;
+package com.radenmas.smartpowermeter.ui;
 
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -23,21 +23,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.radenmas.smartenergymeter.DataChart;
-import com.radenmas.smartenergymeter.R;
+import com.radenmas.smartpowermeter.DataChart;
+import com.radenmas.smartpowermeter.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class LampOneFragment extends Fragment {
+public class VoltFragment extends Fragment {
 
     LineChart chart;
     LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
 
-    public LampOneFragment() {
+    public VoltFragment() {
         // Required empty public constructor
     }
 
@@ -53,7 +53,7 @@ public class LampOneFragment extends Fragment {
         Graph(500);
 
         chart.getDescription().setEnabled(false);
-        chart.setNoDataText(getString(R.string.lamp_one));
+        chart.setNoDataText(getString(R.string.volt));
         chart.setNoDataTextColor(getResources().getColor(R.color.dark_icon));
         chart.invalidate();
 
@@ -80,7 +80,7 @@ public class LampOneFragment extends Fragment {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
 
                         DataChart dataChart = child.getValue(DataChart.class);
-                        data.add(new Entry(dataChart.getTime(), dataChart.getArus1()));
+                        data.add(new Entry(dataChart.getTime(), dataChart.getVolt()));
                     }
                     showChart(data);
                     lineDataSet.setDrawCircles(false);
@@ -128,10 +128,10 @@ public class LampOneFragment extends Fragment {
         });
 
         YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.RIGHT);
-        yAxisL.setDrawGridLines(false);
+        yAxisL.setDrawGridLines(true);
         yAxisL.setDrawLabels(true);
-        yAxisL.setAxisMinimum(0);
-        yAxisL.setAxisMaximum(7);
+        yAxisL.setAxisMinimum(200);
+        yAxisL.setAxisMaximum(240);
 
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
