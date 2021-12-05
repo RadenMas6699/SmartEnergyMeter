@@ -6,16 +6,18 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,49 +26,109 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.radenmas.smartpowermeter.DataChart;
-import com.radenmas.smartpowermeter.InfoAppActivity;
 import com.radenmas.smartpowermeter.R;
 import com.radenmas.smartpowermeter.base.BaseActivity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class MainActivity extends BaseActivity {
-    private TextView voltLampOne, ampereLampOne, wattLampOne,
-            voltLampTwo, ampereLampTwo, wattLampTwo,
-            voltPlug, amperePlug, wattPlug,
+public class MainAct extends BaseActivity {
+
+    private TextView tvTime,
+            ampereLampOne, wattLampOne,
+            ampereLampTwo, wattLampTwo,
+            amperePlug, wattPlug,
             statusLampOne, statusLampTwo, statusPlug;
-    private ImageView switchLampOne, switchLampTwo, switchPlug, stateLampOne, stateLampTwo, statePlug;
-    private ImageButton imgInfo;
-    private RadioGroup radioGroup;
-    private RadioButton radioVolt, radioLampOne, radioLampTwo, radioPlug;
+    private ImageView imgProfile, imgInfo, imgLiving, imgBedroom, imgKitchen,
+            switchLampOne, switchLampTwo, switchPlug,
+            stateLampOne, stateLampTwo, statePlug;
+    private ViewPager viewPager;
     int iWatt1, iWatt2, iWatt3;
     float fAmpere1, fAmpere2, fAmpere3;
     int a, b, c;
+
+    int maxVolt = 0;
+    int maxDaya = 0;
+
 
     DecimalFormat koma = new DecimalFormat("#.##");
 
     private static final String ID = "Notif";
     private static final String NAME = "Smart Energy Meter";
 
-
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_main;
+        return R.layout.act_main;
     }
 
     @Override
     protected void myCodeHere() {
+        maxVolt = sharedPreferences.getInt(getResources().getString(R.string.prefVolt), 0);
+        maxDaya = sharedPreferences.getInt(getResources().getString(R.string.prefDaya), 0);
+
         initView();
+        setupViewPager(viewPager);
         onClick();
         cekStatus();
         getData();
 
-        selectTextView(radioVolt, radioLampOne, radioLampTwo, radioPlug);
+        Date dt = new Date();
+        int hours = dt.getHours();
+        if (hours >= 1 && hours <= 11) {
+            tvTime.setText("Selamat Pagi");
+        } else if (hours > 11 && hours <= 15) {
+            tvTime.setText("Selamat Siang");
+        } else if (hours > 15 && hours <= 18) {
+            tvTime.setText("Selamat Sore");
+        } else if (hours > 18 && hours <= 24) {
+            tvTime.setText("Selamat Malam");
+        } else {
+            tvTime.setText("-");
+        }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new VoltFragment()).commit();
+
     }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new MainFrag(), "Header");
+        adapter.addFragment(new VoltFrag(), "Chart");
+        viewPager.setAdapter(adapter);
+    }
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
 
     private void getData() {
         DatabaseReference dbLast = FirebaseDatabase.getInstance().getReference("SmartEnergyMeter");
@@ -77,9 +139,9 @@ public class MainActivity extends BaseActivity {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     DataChart dataChart = child.getValue(DataChart.class);
 
-                    voltLampOne.setText("V : " + dataChart.getVolt() + " V");
-                    voltLampTwo.setText("V : " + dataChart.getVolt() + " V");
-                    voltPlug.setText("V : " + dataChart.getVolt() + " V");
+                    if (dataChart.getVolt() > maxVolt) {
+                        notifMax("Voltase melebihi batas maksimum dari yang telah ditentukan");
+                    }
 
                     fAmpere1 = dataChart.getArus1();
                     fAmpere2 = dataChart.getArus2();
@@ -112,32 +174,32 @@ public class MainActivity extends BaseActivity {
 
                 if (a == 1) {
                     a = 0;
-                    setOnPower(fAmpere1, iWatt1, ampereLampOne, wattLampOne,
+                    setOnPower(imgLiving, fAmpere1, iWatt1, ampereLampOne, wattLampOne,
                             switchLampOne, stateLampOne, statusLampOne);
-                    notif("Lampu Satu");
+                    notifOn("Lampu Satu");
                 } else {
                     a = 1;
-                    setOffPower(ampereLampOne, wattLampOne,
+                    setOffPower(imgLiving, ampereLampOne, wattLampOne,
                             switchLampOne, stateLampOne, statusLampOne);
                 }
                 if (b == 1) {
                     b = 0;
-                    setOnPower(fAmpere2, iWatt2, ampereLampTwo, wattLampTwo,
+                    setOnPower(imgBedroom, fAmpere2, iWatt2, ampereLampTwo, wattLampTwo,
                             switchLampTwo, stateLampTwo, statusLampTwo);
-                    notif("Lampu Dua");
+                    notifOn("Lampu Dua");
                 } else {
                     b = 1;
-                    setOffPower(ampereLampTwo, wattLampTwo,
+                    setOffPower(imgBedroom, ampereLampTwo, wattLampTwo,
                             switchLampTwo, stateLampTwo, statusLampTwo);
                 }
                 if (c == 1) {
                     c = 0;
-                    setOnPower(fAmpere3, iWatt3, amperePlug, wattPlug,
+                    setOnPower(imgKitchen, fAmpere3, iWatt3, amperePlug, wattPlug,
                             switchPlug, statePlug, statusPlug);
-                    notif("Stop Kontak");
+                    notifOn("Stop Kontak");
                 } else {
                     c = 1;
-                    setOffPower(amperePlug, wattPlug,
+                    setOffPower(imgKitchen, amperePlug, wattPlug,
                             switchPlug, statePlug, statusPlug);
                 }
             }
@@ -149,48 +211,25 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-
     private void onClick() {
-        imgInfo.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, InfoAppActivity.class));
+        imgProfile.setOnClickListener(v -> {
+            startActivity(new Intent(MainAct.this, InfoAppAct.class));
         });
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-
-                    case R.id.radioLampOne:
-                        selectTextView(radioLampOne, radioVolt, radioLampTwo, radioPlug);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new LampOneFragment()).commit();
-                        break;
-                    case R.id.radioLampTwo:
-                        selectTextView(radioLampTwo, radioLampOne, radioVolt, radioPlug);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new LampTwoFragment()).commit();
-                        break;
-                    case R.id.radioPlug:
-                        selectTextView(radioPlug, radioVolt, radioLampOne, radioLampTwo);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new PlugFragment()).commit();
-                        break;
-                    default:
-                        selectTextView(radioVolt, radioLampOne, radioLampTwo, radioPlug);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_chart, new VoltFragment()).commit();
-                        break;
-                }
-            }
+        imgInfo.setOnClickListener(v -> {
+            startActivity(new Intent(MainAct.this, SettingsAct.class));
         });
 
         switchLampOne.setOnClickListener(v -> {
             if (a == 1) {
                 a = 0;
                 dbReff.child("lampu_1").setValue(1);
-                setOnPower(fAmpere1, iWatt1, ampereLampOne, wattLampOne,
+                setOnPower(imgLiving, fAmpere1, iWatt1, ampereLampOne, wattLampOne,
                         switchLampOne, stateLampOne, statusLampOne);
-                notif("Lampu Satu");
+                notifOn("Lampu Satu");
             } else {
                 a = 1;
                 dbReff.child("lampu_1").setValue(0);
-                setOffPower(ampereLampOne, wattLampOne,
+                setOffPower(imgLiving, ampereLampOne, wattLampOne,
                         switchLampOne, stateLampOne, statusLampOne);
             }
         });
@@ -199,13 +238,13 @@ public class MainActivity extends BaseActivity {
             if (b == 1) {
                 b = 0;
                 dbReff.child("lampu_2").setValue(1);
-                setOnPower(fAmpere2, iWatt2, ampereLampTwo, wattLampTwo,
+                setOnPower(imgBedroom, fAmpere2, iWatt2, ampereLampTwo, wattLampTwo,
                         switchLampTwo, stateLampTwo, statusLampTwo);
-                notif("Lampu Dua");
+                notifOn("Lampu Dua");
             } else {
                 b = 1;
                 dbReff.child("lampu_2").setValue(0);
-                setOffPower(ampereLampTwo, wattLampTwo,
+                setOffPower(imgBedroom, ampereLampTwo, wattLampTwo,
                         switchLampTwo, stateLampTwo, statusLampTwo);
             }
         });
@@ -214,19 +253,20 @@ public class MainActivity extends BaseActivity {
             if (c == 1) {
                 c = 0;
                 dbReff.child("lampu_3").setValue(1);
-                setOnPower(fAmpere3, iWatt3, amperePlug, wattPlug,
+                setOnPower(imgKitchen, fAmpere3, iWatt3, amperePlug, wattPlug,
                         switchPlug, statePlug, statusPlug);
-                notif("Stop Kontak");
+                notifOn("Stop Kontak");
             } else {
                 c = 1;
                 dbReff.child("lampu_3").setValue(0);
-                setOffPower(amperePlug, wattPlug,
+                setOffPower(imgKitchen, amperePlug, wattPlug,
                         switchPlug, statePlug, statusPlug);
             }
         });
     }
 
-    private void setOffPower(TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
+    private void setOffPower(ImageView imgIcon, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
+        imgIcon.setColorFilter(Color.argb(255, 222, 222, 222));
         ampere.setText(R.string.value_a);
         watt.setText(R.string.value_w);
         switc.setImageResource(R.drawable.ic_power_off);
@@ -234,30 +274,30 @@ public class MainActivity extends BaseActivity {
         status.setText(R.string.status_off);
     }
 
-    private void setOnPower(float strampere, float strwatt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
-        ampere.setText("A : " + strampere + " A");
-        watt.setText("W: " + koma.format(strampere) + " W");
+    private void setOnPower(ImageView imgIcon, float strampere, float strwatt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
+        imgIcon.setColorFilter(Color.argb(255, 3, 169, 244));
+        ampere.setText("A : " + koma.format(strampere) + " A");
+        watt.setText("W: " + koma.format(strwatt) + " W");
         switc.setImageResource(R.drawable.ic_power_on);
         state.setVisibility(View.VISIBLE);
         status.setText(R.string.status_on);
+
+        if (strampere > maxDaya) {
+            notifMax("Penggunaan daya melebihi maksimum penggunaan dari yang telah ditentukan");
+        }
     }
 
     private void initView() {
-        radioGroup = findViewById(R.id.radioGroup);
-        radioVolt = findViewById(R.id.radioVolt);
-        radioLampOne = findViewById(R.id.radioLampOne);
-        radioLampTwo = findViewById(R.id.radioLampTwo);
-        radioPlug = findViewById(R.id.radioPlug);
+        viewPager = findViewById(R.id.viewpager);
 
-        voltLampOne = findViewById(R.id.voltLampOne);
+        tvTime = findViewById(R.id.tvTime);
+
         ampereLampOne = findViewById(R.id.ampereLampOne);
         wattLampOne = findViewById(R.id.wattLampOne);
 
-        voltPlug = findViewById(R.id.voltPlug);
         amperePlug = findViewById(R.id.amperePlug);
         wattPlug = findViewById(R.id.wattPlug);
 
-        voltLampTwo = findViewById(R.id.voltLampTwo);
         ampereLampTwo = findViewById(R.id.ampereLampTwo);
         wattLampTwo = findViewById(R.id.wattLampTwo);
 
@@ -273,23 +313,15 @@ public class MainActivity extends BaseActivity {
         statusPlug = findViewById(R.id.tvStatusPlug);
         statusLampTwo = findViewById(R.id.tvStatusLampTwo);
 
-        imgInfo = findViewById(R.id.imgInfo);
+        imgInfo = findViewById(R.id.imgSettings);
+        imgProfile = findViewById(R.id.imgProfile);
+        imgLiving = findViewById(R.id.img_living_room);
+        imgBedroom = findViewById(R.id.img_bedroom);
+        imgKitchen = findViewById(R.id.img_kitchen);
     }
 
-    private void selectTextView(TextView tvSelected, TextView tvUnselected1, TextView tvUnselected2, TextView tvUnselected3) {
-        tvSelected.setBackgroundResource(R.drawable.bg_btn_selected);
-        tvUnselected1.setBackgroundResource(R.drawable.bg_btn_unselected);
-        tvUnselected2.setBackgroundResource(R.drawable.bg_btn_unselected);
-        tvUnselected3.setBackgroundResource(R.drawable.bg_btn_unselected);
-
-        tvSelected.setTextColor(getResources().getColor(R.color.black));
-        tvUnselected1.setTextColor(getResources().getColor(android.R.color.white));
-        tvUnselected2.setTextColor(getResources().getColor(android.R.color.white));
-        tvUnselected3.setTextColor(getResources().getColor(android.R.color.white));
-    }
-
-    private void notif(String device) {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void notifOn(String device) {
+        Intent intent = new Intent(this, MainAct.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -306,6 +338,34 @@ public class MainActivity extends BaseActivity {
                         .setSmallIcon(R.drawable.ic_wireless_energy_color)
                         .setContentTitle(NAME)
                         .setContentText(device + " menyala")
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
+                        .setVibrate(v)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, mBuilder.build());
+    }
+
+    private void notifMax(String device) {
+        Intent intent = new Intent(this, MainAct.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    ID, NAME,
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(device);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        long[] v = {500, 1000};
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this, ID)
+                        .setSmallIcon(R.drawable.ic_wireless_energy_color)
+                        .setContentTitle(NAME)
+                        .setContentText(device)
                         .setContentIntent(pendingIntent)
                         .setAutoCancel(true)
                         .setVibrate(v)

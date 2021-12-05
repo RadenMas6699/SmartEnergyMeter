@@ -4,22 +4,23 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.radenmas.smartenergymeter"
+        applicationId "com.radenmas.smartpowermeter"
         minSdk 21
-        targetSdk 30
+        targetSdk 31
         versionCode 1
-        versionName "1.1"
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -36,10 +37,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //firebase
-    implementation 'com.google.firebase:firebase-database:20.0.2'
+    implementation 'com.google.firebase:firebase-database:20.0.3'
     implementation 'com.google.firebase:firebase-core:20.0.0'
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
     implementation platform('com.google.firebase:firebase-bom:28.2.1')
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

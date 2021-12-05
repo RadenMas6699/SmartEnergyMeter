@@ -30,14 +30,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class PlugFragment extends Fragment {
+public class VoltFrag extends Fragment {
 
     LineChart chart;
     LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
 
-    public PlugFragment() {
+    public VoltFrag() {
         // Required empty public constructor
     }
 
@@ -45,7 +45,7 @@ public class PlugFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_chart, container, false);
+        View view = inflater.inflate(R.layout.frag_chart, container, false);
 
         initView(view);
         onClick();
@@ -53,7 +53,7 @@ public class PlugFragment extends Fragment {
         Graph(500);
 
         chart.getDescription().setEnabled(false);
-        chart.setNoDataText(getString(R.string.stop_kontak));
+        chart.setNoDataText(getString(R.string.volt));
         chart.setNoDataTextColor(getResources().getColor(R.color.dark_icon));
         chart.invalidate();
 
@@ -80,7 +80,7 @@ public class PlugFragment extends Fragment {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
 
                         DataChart dataChart = child.getValue(DataChart.class);
-                        data.add(new Entry(dataChart.getTime(), dataChart.getArus3()));
+                        data.add(new Entry(dataChart.getTime(), dataChart.getVolt()));
                     }
                     showChart(data);
                     lineDataSet.setDrawCircles(false);
@@ -128,10 +128,10 @@ public class PlugFragment extends Fragment {
         });
 
         YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.RIGHT);
-        yAxisL.setDrawGridLines(false);
+        yAxisL.setDrawGridLines(true);
         yAxisL.setDrawLabels(true);
-        yAxisL.setAxisMinimum(0);
-        yAxisL.setAxisMaximum(15);
+        yAxisL.setAxisMinimum(200);
+        yAxisL.setAxisMaximum(240);
 
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);

@@ -6,6 +6,9 @@
     <string name="faculty_name">Fakultas Teknik</string>
     <string name="campus_name">Universitas Negeri Makassar</string>
     <string name="years">2021</string>
+    <string name="prefAccount">myAccount</string>
+    <string name="prefVolt">setMaxVolt</string>
+    <string name="prefDaya">setMaxDaya</string>
     <string name="lamp_two">Lampu Dua</string>
     <string name="lamp_one">Lampu Satu</string>
     <string name="stop_kontak">Stop Kontak</string>
@@ -20,4 +23,10 @@
     <string name="value_w">W: -</string>
     <string name="dash">-</string>
     <string name="voltase">Voltase</string>
+    <string name="settings">Pengaturan</string>
+    <string name="daya">Daya</string>
+    <string name="tegangan">Tegangan</string>
+    <string name="save">Simpan</string>
+    <string name="desc_daya">Atur Batas Maksimum Penggunaan Daya</string>
+    <string name="desc_watt">Atur Batas Maksimum Penggunaan Tegangan</string>
 </resources>

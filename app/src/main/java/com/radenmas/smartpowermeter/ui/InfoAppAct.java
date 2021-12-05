@@ -1,4 +1,4 @@
-package com.radenmas.smartpowermeter;
+package com.radenmas.smartpowermeter.ui;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -6,14 +6,15 @@ import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.radenmas.smartpowermeter.R;
 import com.radenmas.smartpowermeter.base.BaseActivity;
 
-public class InfoAppActivity extends BaseActivity {
+public class InfoAppAct extends BaseActivity {
     private TextView app_version;
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_info_app;
+        return R.layout.act_info_app;
     }
 
     @Override
