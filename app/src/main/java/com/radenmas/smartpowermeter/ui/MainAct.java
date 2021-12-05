@@ -58,7 +58,7 @@ public class MainAct extends BaseActivity {
     DecimalFormat koma = new DecimalFormat("#.##");
 
     private static final String ID = "Notif";
-    private static final String NAME = "Smart Energy Meter";
+    private static final String NAME = "Smart Power Meter";
 
     @Override
     protected int getLayoutResource() {
