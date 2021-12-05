@@ -38,15 +38,15 @@ import java.util.List;
 
 public class MainAct extends BaseActivity {
 
-    private TextView tvTime,
+    TextView tvTime,
             ampereLampOne, wattLampOne,
             ampereLampTwo, wattLampTwo,
             amperePlug, wattPlug,
             statusLampOne, statusLampTwo, statusPlug;
-    private ImageView imgProfile, imgInfo, imgLiving, imgBedroom, imgKitchen,
+    ImageView imgProfile, imgInfo, imgLiving, imgBedroom, imgKitchen,
             switchLampOne, switchLampTwo, switchPlug,
             stateLampOne, stateLampTwo, statePlug;
-    private ViewPager viewPager;
+    ViewPager viewPager;
     int iWatt1, iWatt2, iWatt3;
     float fAmpere1, fAmpere2, fAmpere3;
     int a, b, c;
@@ -139,7 +139,7 @@ public class MainAct extends BaseActivity {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     DataChart dataChart = child.getValue(DataChart.class);
 
-                    if (dataChart.getVolt() > maxVolt) {
+                    if (dataChart.getVolt() > maxVolt && dataChart.getVolt() != 0) {
                         notifMax("Voltase melebihi batas maksimum dari yang telah ditentukan");
                     }
 
@@ -282,7 +282,7 @@ public class MainAct extends BaseActivity {
         state.setVisibility(View.VISIBLE);
         status.setText(R.string.status_on);
 
-        if (strampere > maxDaya) {
+        if (strampere > maxDaya && strampere != 0) {
             notifMax("Penggunaan daya melebihi maksimum penggunaan dari yang telah ditentukan");
         }
     }
