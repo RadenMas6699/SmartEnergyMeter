@@ -142,7 +142,7 @@
 
                                 <TextView
                                     android:id="@+id/ampereLampOne"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="16dp"
                                     android:text="@string/value_a"
@@ -151,7 +151,7 @@
 
                                 <TextView
                                     android:id="@+id/wattLampOne"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="16dp"
                                     android:text="@string/value_p"
@@ -233,7 +233,7 @@
 
                                 <TextView
                                     android:id="@+id/ampereLampTwo"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="16dp"
                                     android:text="@string/value_a"
@@ -241,7 +241,7 @@
 
                                 <TextView
                                     android:id="@+id/wattLampTwo"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="16dp"
                                     android:text="@string/value_p"
@@ -323,7 +323,7 @@
 
                                 <TextView
                                     android:id="@+id/amperePlug"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="16dp"
                                     android:text="@string/value_a"
@@ -331,7 +331,7 @@
 
                                 <TextView
                                     android:id="@+id/wattPlug"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="16dp"
                                     android:text="@string/value_p"
