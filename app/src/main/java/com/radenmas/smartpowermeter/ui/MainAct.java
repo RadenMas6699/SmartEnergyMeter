@@ -276,8 +276,8 @@ public class MainAct extends BaseActivity {
 
     private void setOnPower(ImageView imgIcon, float strampere, float strwatt, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
         imgIcon.setColorFilter(Color.argb(255, 3, 169, 244));
-        ampere.setText("A : " + koma.format(strampere) + " A");
-        watt.setText("W: " + koma.format(strwatt) + " W");
+        ampere.setText("A\t: " + koma.format(strampere) + " A");
+        watt.setText("P\t: " + koma.format(strwatt) + " W");
         switc.setImageResource(R.drawable.ic_power_on);
         state.setVisibility(View.VISIBLE);
         status.setText(R.string.status_on);
