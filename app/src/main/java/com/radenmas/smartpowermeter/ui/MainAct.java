@@ -268,7 +268,7 @@ public class MainAct extends BaseActivity {
     private void setOffPower(ImageView imgIcon, TextView ampere, TextView watt, ImageView switc, ImageView state, TextView status) {
         imgIcon.setColorFilter(Color.argb(255, 222, 222, 222));
         ampere.setText(R.string.value_a);
-        watt.setText(R.string.value_w);
+        watt.setText(R.string.value_p);
         switc.setImageResource(R.drawable.ic_power_off);
         state.setVisibility(View.INVISIBLE);
         status.setText(R.string.status_off);
