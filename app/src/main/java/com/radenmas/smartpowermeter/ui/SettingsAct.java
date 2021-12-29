@@ -31,8 +31,8 @@ public class SettingsAct extends BaseActivity {
     }
 
     private void getData() {
-        maxDaya = sharedPreferences.getInt(getResources().getString(R.string.prefDaya), 0);
-        maxVolt = sharedPreferences.getInt(getResources().getString(R.string.prefVolt), 0);
+        maxVolt = sharedPreferences.getInt(getResources().getString(R.string.prefVolt), 230);
+        maxDaya = sharedPreferences.getInt(getResources().getString(R.string.prefDaya), 900);
 
         valWattMax.setText(maxDaya + " W");
         valVoltMax.setText(maxVolt + " V");
@@ -40,11 +40,12 @@ public class SettingsAct extends BaseActivity {
 
     private void onClick() {
         rlWatt.setOnClickListener(view -> {
-            showDialog("Daya", "Masukkan nilai maksimum Daya", getResources().getString(R.string.prefDaya));
+            showDialog(getResources().getString(R.string.daya), getResources().getString(R.string.desc_daya), getResources().getString(R.string.prefDaya));
+
         });
 
         rlVolt.setOnClickListener(view -> {
-            showDialog("Voltase", "Masukkan nilai maksimum Volt", getResources().getString(R.string.prefVolt));
+            showDialog(getResources().getString(R.string.voltage), getResources().getString(R.string.desc_voltage), getResources().getString(R.string.prefVolt));
         });
     }
 

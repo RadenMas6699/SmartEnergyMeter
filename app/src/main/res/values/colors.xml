@@ -2,50 +2,17 @@
 <resources>
     <color name="black">#171717</color>
     <color name="blue">#1EA6FC</color>
-    <color name="orange">#FDBB06</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="primary">#03A9F4</color>
-    <color name="primary_dark">#0288D1</color>
     <color name="primary_light">#B3E5FC</color>
     <color name="accent">#03A9F4</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
-    <color name="icons">#FFFFFF</color>
-    <color name="divider">#BDBDBD</color>
-    <color name="monitor">#E6E6E6</color>
 
-    <color name="green_strong">#64DD17</color>
     <color name="green">#1AA23F</color>
     <color name="bg_white_blue">#F5F6FC</color>
     <color name="bg_main_control">#FCFCFC</color>
 <!--    <color name="sky_blue">#1A8DFF</color>-->
     <color name="dark_icon">#555555</color>
-    <color name="semiTransparent">#80D5D5D5</color>
 
-    <!-- dots inactive colors -->
-    <color name="dot_dark_screen1">#A9A9A9</color>
-    <color name="dot_dark_screen2">#A9A9A9</color>
-    <color name="dot_dark_screen3">#A9A9A9</color>
-    <color name="dot_dark_screen4">#A9A9A9</color>
-
-    <!-- dots active colors -->
-    <color name="dot_light_screen1">@color/bg_white_blue</color>
-    <color name="dot_light_screen2">@color/bg_white_blue</color>
-    <color name="dot_light_screen3">@color/bg_white_blue</color>
-    <color name="dot_light_screen4">@color/bg_white_blue</color>
-
-    <array name="array_dot_active">
-        <item>@color/dot_light_screen1</item>
-        <item>@color/dot_light_screen2</item>
-        <item>@color/dot_light_screen3</item>
-        <item>@color/dot_light_screen4</item>
-    </array>
-
-    <array name="array_dot_inactive">
-        <item>@color/dot_dark_screen1</item>
-        <item>@color/dot_dark_screen2</item>
-        <item>@color/dot_dark_screen3</item>
-        <item>@color/dot_dark_screen4</item>
-    </array>
 </resources>

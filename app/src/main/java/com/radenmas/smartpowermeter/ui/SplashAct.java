@@ -1,23 +1,18 @@
 package com.radenmas.smartpowermeter.ui;
 
 import android.content.Intent;
-import android.os.Handler;
+import android.os.Bundle;
 
-import com.radenmas.smartpowermeter.R;
-import com.radenmas.smartpowermeter.base.BaseActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class SplashAct extends BaseActivity {
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.act_splash;
-    }
+public class SplashAct extends AppCompatActivity {
 
     @Override
-    protected void myCodeHere() {
-        new Handler().postDelayed(() -> {
-            startActivity(new Intent(SplashAct.this, MainAct.class));
-            finish();
-        }, 1500);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        startActivity(new Intent(SplashAct.this, MainAct.class));
+        finish();
     }
+
 }

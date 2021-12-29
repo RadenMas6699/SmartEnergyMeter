@@ -1,5 +1,6 @@
 package com.radenmas.smartpowermeter.base;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.radenmas.smartpowermeter.R;
 
 public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutResource();
@@ -30,6 +32,9 @@ public abstract class BaseFragment extends Fragment {
 
         database = FirebaseDatabase.getInstance();
         dbReff = database.getReference();
+
+        sharedPreferences = getActivity().getSharedPreferences(getResources().getString(R.string.prefAccount), Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         myCodeHere(view);
 

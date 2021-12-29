@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_main_control">
+
+                <ImageView
+                    android:id="@+id/img_living_room"
+                    android:layout_width="140dp"
+                    android:layout_height="90dp"
+                    android:padding="18dp"
+                    android:src="@drawable/ic_lamp_one"
+                    app:tint="#DEDEDE" />
+
+                <TextView
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_living_room"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/lamp_one"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="16dp"
+                    android:layout_toEndOf="@id/img_living_room"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/ampereLampOne"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:text="@string/value_a"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/wattLampOne"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:text="@string/value_p"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tvStatusLampOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/status_dash" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgStateLampOne"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/on_power"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/imgSwitchLampOne"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_power_off"
+                    tools:ignore="UsingOnClickInXml" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="6dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_main_control">
+
+                <ImageView
+                    android:id="@+id/img_bedroom"
+                    android:layout_width="140dp"
+                    android:layout_height="90dp"
+                    android:padding="18dp"
+                    android:src="@drawable/ic_lamp_two"
+                    app:tint="#DEDEDE" />
+
+                <TextView
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_bedroom"
+                    android:gravity="center"
+                    android:text="@string/lamp_two"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="16dp"
+                    android:layout_toEndOf="@id/img_bedroom"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/ampereLampTwo"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:text="@string/value_a"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/wattLampTwo"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:text="@string/value_p"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvStatusLampTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/status_dash" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgStateLampTwo"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/on_power"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/imgSwitchLampTwo"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_power_off"
+                    tools:ignore="UsingOnClickInXml" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_main_control">
+
+                <ImageView
+                    android:id="@+id/img_kitchen"
+                    android:layout_width="140dp"
+                    android:layout_height="90dp"
+                    android:padding="18dp"
+                    android:src="@drawable/ic_stop_kontak"
+                    app:tint="#DEDEDE" />
+
+                <TextView
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_kitchen"
+                    android:gravity="center"
+                    android:text="@string/stop_kontak"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="16dp"
+                    android:layout_toEndOf="@id/img_kitchen"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/amperePlug"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:text="@string/value_a"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/wattPlug"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:text="@string/value_p"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvStatusPlug"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/status_dash" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgStatePlug"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/on_power"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/imgSwitchPlug"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_power_off"
+                    tools:ignore="UsingOnClickInXml" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

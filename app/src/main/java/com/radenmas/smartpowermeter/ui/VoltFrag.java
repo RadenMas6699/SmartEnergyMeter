@@ -1,13 +1,9 @@
 package com.radenmas.smartpowermeter.ui;
 
-import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,43 +21,34 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.radenmas.smartpowermeter.DataChart;
 import com.radenmas.smartpowermeter.R;
+import com.radenmas.smartpowermeter.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class VoltFrag extends Fragment {
+public class VoltFrag extends BaseFragment {
 
     LineChart chart;
     LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
 
-    public VoltFrag() {
-        // Required empty public constructor
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.frag_chart;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.frag_chart, container, false);
-
+    protected void myCodeHere(View view) {
         initView(view);
-        onClick();
 
         Graph(500);
 
         chart.getDescription().setEnabled(false);
-        chart.setNoDataText(getString(R.string.volt));
+        chart.setNoDataText(getString(R.string.voltage));
         chart.setNoDataTextColor(getResources().getColor(R.color.dark_icon));
         chart.invalidate();
-
-        return view;
-    }
-
-    private void onClick() {
-
     }
 
     private void initView(View view) {
@@ -130,8 +117,8 @@ public class VoltFrag extends Fragment {
         YAxis yAxisL = chart.getAxis(YAxis.AxisDependency.RIGHT);
         yAxisL.setDrawGridLines(true);
         yAxisL.setDrawLabels(true);
-        yAxisL.setAxisMinimum(200);
-        yAxisL.setAxisMaximum(240);
+        yAxisL.setAxisMinimum(180);
+        yAxisL.setAxisMaximum(260);
 
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);

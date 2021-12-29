@@ -12,21 +12,16 @@
     <string name="lamp_two">Lampu Dua</string>
     <string name="lamp_one">Lampu Satu</string>
     <string name="stop_kontak">Stop Kontak</string>
-    <string name="volt">Volt</string>
-    <string name="ampere">Ampere</string>
-    <string name="watt">Watt</string>
     <string name="status_on">Status : ON</string>
     <string name="status_off">Status : OFF</string>
     <string name="status_dash">Status : -</string>
-    <string name="value_v">V : -</string>
-    <string name="value_a">A\t: -</string>
+    <string name="value_a">I\t\t: -</string>
     <string name="value_p">P\t: -</string>
-    <string name="dash">-</string>
-    <string name="voltase">Voltase</string>
+    <string name="voltage">Voltage</string>
     <string name="settings">Pengaturan</string>
     <string name="daya">Daya</string>
     <string name="tegangan">Tegangan</string>
     <string name="save">Simpan</string>
     <string name="desc_daya">Atur Batas Maksimum Penggunaan Daya</string>
-    <string name="desc_watt">Atur Batas Maksimum Penggunaan Tegangan</string>
+    <string name="desc_voltage">Atur Batas Maksimum Penggunaan Tegangan</string>
 </resources>

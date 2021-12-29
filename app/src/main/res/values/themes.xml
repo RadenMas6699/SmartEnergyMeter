@@ -16,14 +16,21 @@
     </style>
 
     <style name="Splash" parent="Theme.SmartPowerMeter">
-        <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowBackground">@drawable/splash_bg</item>
     </style>
 
     <style name="Info" parent="Theme.SmartPowerMeter">
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="colorPrimary">@color/primary_text</item>
+    </style>
+    <style name="MyCustomTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
     </style>
 </resources>

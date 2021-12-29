@@ -19,12 +19,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class MainFrag extends BaseFragment {
-    private TextView tvCalender, tvVolt, tvTotalDaya;
-    int total = 0;
+    private TextView tvCalender, tvVolt, tvTotalDaya, tvTotalArus;
+    int totalDaya = 0;
+    float totalArus = 0;
 
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String date;
+    long timesPast, timesNow, timesDay;
 
     @Override
     protected int getLayoutResource() {
@@ -34,16 +36,50 @@ public class MainFrag extends BaseFragment {
     @Override
     protected void myCodeHere(View view) {
         initView(view);
-        getDataVolt();
-        getTotalDaya();
+        getDataLast();
 
         calendar = Calendar.getInstance();
-        dateFormat = new SimpleDateFormat("dd MMM yyyy");
+        dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy");
         date = dateFormat.format(calendar.getTime());
-        tvCalender.setText(date);
+        timesNow = calendar.getTimeInMillis() / 1000;
+        timesPast = timesNow - 2592000;
+        timesDay = timesNow - 86400;
+        tvCalender.setText("" + date);
+
+        getTotalDaya(timesPast, timesNow);
+        getTotalArus(timesDay, timesNow);
     }
 
-    private void getDataVolt() {
+    private void getTotalArus(long timesDay, long timesNow) {
+        dbReff.child("SmartEnergyMeter").orderByChild("time").startAt(timesDay).endAt(timesNow).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        DataChart dataChart = ds.getValue(DataChart.class);
+
+                        float arus1 = dataChart.getArus1();
+                        float arus2 = dataChart.getArus2();
+                        float arus3 = dataChart.getArus3();
+                        float arusTotal = arus1 + arus2 + arus3;
+                        totalArus = totalArus + arusTotal;
+
+                        tvTotalArus.setText(totalArus + " A");
+                    }
+                } else {
+                    tvTotalArus.setText("0 A");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getDataLast() {
         DatabaseReference dbLast = FirebaseDatabase.getInstance().getReference("SmartEnergyMeter");
         Query query = dbLast.orderByKey().limitToLast(1);
         query.addValueEventListener(new ValueEventListener() {
@@ -60,11 +96,10 @@ public class MainFrag extends BaseFragment {
 
             }
         });
-
     }
 
-    private void getTotalDaya() {
-        dbReff.child("SmartEnergyMeter").addValueEventListener(new ValueEventListener() {
+    private void getTotalDaya(long timesPast, long timesNow) {
+        dbReff.child("SmartEnergyMeter").orderByChild("time").startAt(timesPast).endAt(timesNow).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
@@ -74,9 +109,10 @@ public class MainFrag extends BaseFragment {
                     int watt2 = (int) dataChart.getWatt2();
                     int watt3 = (int) dataChart.getWatt3();
                     int wattTotal = watt1 + watt2 + watt3;
-                    total = total + wattTotal;
+                    totalDaya = totalDaya + wattTotal;
+                    int rata = totalDaya / 30;
 
-                    tvTotalDaya.setText(total + " W");
+                    tvTotalDaya.setText(rata + " W");
                 }
             }
 
@@ -91,5 +127,6 @@ public class MainFrag extends BaseFragment {
         tvCalender = view.findViewById(R.id.tvCalender);
         tvVolt = view.findViewById(R.id.tvVolt);
         tvTotalDaya = view.findViewById(R.id.tvTotalDaya);
+        tvTotalArus = view.findViewById(R.id.tvTotalArus);
     }
 }
