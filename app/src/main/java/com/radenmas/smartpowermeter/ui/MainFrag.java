@@ -15,6 +15,7 @@ import com.radenmas.smartpowermeter.DataChart;
 import com.radenmas.smartpowermeter.R;
 import com.radenmas.smartpowermeter.base.BaseFragment;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -26,7 +27,8 @@ public class MainFrag extends BaseFragment {
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String date;
-    long timesPast, timesNow, timesDay;
+    long timesPast, timesNow;
+    DecimalFormat koma = new DecimalFormat("#.##");
 
     @Override
     protected int getLayoutResource() {
@@ -43,40 +45,9 @@ public class MainFrag extends BaseFragment {
         date = dateFormat.format(calendar.getTime());
         timesNow = calendar.getTimeInMillis() / 1000;
         timesPast = timesNow - 2592000;
-        timesDay = timesNow - 86400;
         tvCalender.setText("" + date);
 
         getTotalDaya(timesPast, timesNow);
-        getTotalArus(timesDay, timesNow);
-    }
-
-    private void getTotalArus(long timesDay, long timesNow) {
-        dbReff.child("SmartEnergyMeter").orderByChild("time").startAt(timesDay).endAt(timesNow).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        DataChart dataChart = ds.getValue(DataChart.class);
-
-                        float arus1 = dataChart.getArus1();
-                        float arus2 = dataChart.getArus2();
-                        float arus3 = dataChart.getArus3();
-                        float arusTotal = arus1 + arus2 + arus3;
-                        totalArus = totalArus + arusTotal;
-
-                        tvTotalArus.setText(totalArus + " A");
-                    }
-                } else {
-                    tvTotalArus.setText("0 A");
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void getDataLast() {
@@ -85,9 +56,21 @@ public class MainFrag extends BaseFragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    DataChart dataChart = child.getValue(DataChart.class);
-                    tvVolt.setText(dataChart.getVolt() + " V");
+                if (snapshot.exists()) {
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        DataChart dataChart = child.getValue(DataChart.class);
+                        tvVolt.setText(dataChart.getVolt() + " V");
+                        float arus1 = dataChart.getArus1();
+                        float arus2 = dataChart.getArus2();
+                        float arus3 = dataChart.getArus3();
+                        float arusTotal = arus1 + arus2 + arus3;
+                        totalArus = totalArus + arusTotal;
+
+                        tvTotalArus.setText(koma.format(totalArus) + " A");
+
+                    }
+                } else {
+                    tvTotalArus.setText("0 A");
                 }
             }
 
@@ -105,9 +88,9 @@ public class MainFrag extends BaseFragment {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     DataChart dataChart = ds.getValue(DataChart.class);
 
-                    int watt1 = (int) dataChart.getWatt1();
-                    int watt2 = (int) dataChart.getWatt2();
-                    int watt3 = (int) dataChart.getWatt3();
+                    int watt1 = dataChart.getWatt1();
+                    int watt2 = dataChart.getWatt2();
+                    int watt3 = dataChart.getWatt3();
                     int wattTotal = watt1 + watt2 + watt3;
                     totalDaya = totalDaya + wattTotal;
                     int rata = totalDaya / 30;
