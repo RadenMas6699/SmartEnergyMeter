@@ -64,9 +64,8 @@ public class MainFrag extends BaseFragment {
                         float arus2 = dataChart.getArus2();
                         float arus3 = dataChart.getArus3();
                         float arusTotal = arus1 + arus2 + arus3;
-                        totalArus = totalArus + arusTotal;
 
-                        tvTotalArus.setText(koma.format(totalArus) + " A");
+                        tvTotalArus.setText(koma.format(arusTotal) + " A");
 
                     }
                 } else {
